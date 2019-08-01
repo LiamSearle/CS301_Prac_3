@@ -1,6 +1,6 @@
 COMPILER Calc  $CN
 /* Simple four function calculator
-   P.D. Terry, Rhodes University, 2017 */
+   Liam Searle, Makungu Chansa, Matthew Lewis, Rhodes University, 2019 */
 
 CHARACTERS
   digit      = "0123456789" .
@@ -8,13 +8,14 @@ CHARACTERS
 
 TOKENS
   decNumber  = digit { digit } .
-  hexNumber  = "$" hexdigit { hexdigit } .
+  hexNumber  = "$" hexdigit { hexdigit } | "H" hexdigit { hexdigit } .
 
 IGNORE CHR(0) .. CHR(31)
 
 PRODUCTIONS
   Calc       = { Expression "=" } EOF .
   Expression = Term { "+" Term  |  "-" Term } .
-  Term       = Factor { "*" Factor |  "/" Factor } .
-  Factor     = decNumber | hexNumber .
+  Term       = Parent { "*" Parent | "/" Parent} .
+  Parent 	 = "(" Expression ")" {"!"} | Factor {"!"} | "abs" "(" Expression ")" {"!"} .
+  Factor     = "-" decNumber | decNumber | hexNumber | "-" hexNumber .
 END Calc.
