@@ -1,0 +1,23 @@
+
+   1 COMPILER Calc  $CN
+   2 /* Simple four function calculator
+   3    P.D. Terry, Rhodes University, 2017 */
+   4 
+   5 CHARACTERS
+   6   digit      = "0123456789" .
+   7   hexdigit   = digit + "ABCDEF" .
+   8 
+   9 TOKENS
+  10   decNumber  = digit { digit } .
+  11   hexNumber  = "$" hexdigit { hexdigit } .
+  12 
+  13 IGNORE CHR(0) .. CHR(31)
+  14 
+  15 PRODUCTIONS
+  16   Calc       = { Expression "=" } EOF .
+  17   Expression = Term { "+" Term  |  "-" Term } .
+  18   Term       = Factor { "*" Factor |  "/" Factor } .
+  19   Factor     = decNumber | hexNumber .
+  20 END Calc.
+
+0 errors detected
