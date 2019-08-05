@@ -6,6 +6,7 @@ void main () {
   read(age);
   while (age > 0) {
     bool canVote = age > votingAge;
+    int x = (3 % 2);
     allEligible = allEligible && canVote;
     if (canVote) {
       voters[eligible] = age;

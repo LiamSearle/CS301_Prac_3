@@ -60,6 +60,6 @@
     Type              = BasicType [ "[]" ] .
     BasicType         = "int" | "bool" .
     AddOp             = "+" | "-" | "||" .
-    MulOp             = "*" | "/" | "&&" .
+    MulOp             = "*" | "/" | "&&" | "%" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
   END Parva.
