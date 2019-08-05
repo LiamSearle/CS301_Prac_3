@@ -31,7 +31,7 @@
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
                         | ReturnStatement | HaltStatement
-                        | ReadStatement | WriteStatement .
+                        | ReadStatement | WriteStatement | ElseStatement .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -41,6 +41,7 @@
     Assignment        = Designator "=" Expression ";" .
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement .
+    ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
     ReturnStatement   = "return" ";" .
     HaltStatement     = "halt" ";" .

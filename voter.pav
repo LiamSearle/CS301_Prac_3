@@ -7,6 +7,13 @@ void main () {
   while (age > 0) {
     bool canVote = age > votingAge;
     int x = (3 % 2);
+    if (true){
+
+    }
+    else
+    {
+        
+    }
     allEligible = allEligible && canVote;
     if (canVote) {
       voters[eligible] = age;

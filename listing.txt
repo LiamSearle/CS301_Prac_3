@@ -32,7 +32,7 @@
   31                         | ConstDeclarations | VarDeclarations
   32                         | Assignment | IfStatement | WhileStatement
   33                         | ReturnStatement | HaltStatement
-  34                         | ReadStatement | WriteStatement .
+  34                         | ReadStatement | WriteStatement | ElseStatement .
   35     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
   36     OneConst          = identifier "=" Constant .
   37     Constant          =   number | charLit
@@ -42,27 +42,28 @@
   41     Assignment        = Designator "=" Expression ";" .
   42     Designator        = identifier [ "[" Expression "]" ] .
   43     IfStatement       = "if" "(" Condition ")" Statement .
-  44     WhileStatement    = "while" "(" Condition ")" Statement .
-  45     ReturnStatement   = "return" ";" .
-  46     HaltStatement     = "halt" ";" .
-  47     ReadStatement     = "read" "(" ReadElement
-  48                                    { "," ReadElement } ")" ";" .
-  49     ReadElement       = stringLit | Designator .
-  50     WriteStatement    = "write" "(" WriteElement
-  51                                     { "," WriteElement } ")" ";" .
-  52     WriteElement      = stringLit | Expression .
-  53     Condition         = Expression .
-  54     Expression        = AddExp [ RelOp AddExp ] .
-  55     AddExp            = [ "+" | "-" ] Term { AddOp Term } .
-  56     Term              = Factor { MulOp Factor } .
-  57     Factor            =   Designator | Constant
-  58                         | "new" BasicType "[" Expression "]"
-  59                         | "!" Factor | "(" Expression ")" .
-  60     Type              = BasicType [ "[]" ] .
-  61     BasicType         = "int" | "bool" .
-  62     AddOp             = "+" | "-" | "||" .
-  63     MulOp             = "*" | "/" | "&&" | "%" .
-  64     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
-  65   END Parva.
+  44     ElseStatement     = "else" Statement .
+  45     WhileStatement    = "while" "(" Condition ")" Statement .
+  46     ReturnStatement   = "return" ";" .
+  47     HaltStatement     = "halt" ";" .
+  48     ReadStatement     = "read" "(" ReadElement
+  49                                    { "," ReadElement } ")" ";" .
+  50     ReadElement       = stringLit | Designator .
+  51     WriteStatement    = "write" "(" WriteElement
+  52                                     { "," WriteElement } ")" ";" .
+  53     WriteElement      = stringLit | Expression .
+  54     Condition         = Expression .
+  55     Expression        = AddExp [ RelOp AddExp ] .
+  56     AddExp            = [ "+" | "-" ] Term { AddOp Term } .
+  57     Term              = Factor { MulOp Factor } .
+  58     Factor            =   Designator | Constant
+  59                         | "new" BasicType "[" Expression "]"
+  60                         | "!" Factor | "(" Expression ")" .
+  61     Type              = BasicType [ "[]" ] .
+  62     BasicType         = "int" | "bool" .
+  63     AddOp             = "+" | "-" | "||" .
+  64     MulOp             = "*" | "/" | "&&" | "%" .
+  65     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
+  66   END Parva.
 
 0 errors detected
