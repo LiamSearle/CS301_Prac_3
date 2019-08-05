@@ -1,9 +1,28 @@
+Tokens value and identifier cannot be distinguished
+Tokens value and identifier cannot be distinguished
 
-   1 (((((((((((1))))))))))) = 
-   2 5! = 
-   3 ! (5)! = 
-**** ^ EOF expected
-   4 abs (6 - 12) = 
-   5 abs (2 + abs(2))! = 
+   1 COMPILER Bool  $CN
+   2 /* Simple logical thingy mabob.
+   3    Liam Searle, Makungu Chansa, Matthew Lewis, Rhodes University, 2019 */
+   4 
+   5 CHARACTERS
+   6   term 		   = "abcdefghijklmnopqrstuvwxyz" .
+   7   other 		   = "abcdefghijklmnopqrstuvwxyzA" . 		
+   8   bool	       = "true" + "false" .
+   9   
+  10 TOKENS
+  11   value   = bool | term .
+  12   identifier = other .
+  13 
+  14 IGNORE CHR(0) .. CHR(31)
+  15   
+  16 PRODUCTIONS
+  17   Bool    = { identifier "=" Expression} EOF . 
+  18   Expression = value [Operator] | "!" value | value . 
+  19   Operator 	 = Or Expression | Not Expression | And Expression .
+  20   Or		 = "||" | "or" .
+  21   And		 = "&&" | "and" .
+  22   Not 		 = "!"  | "not" .
+  23 END Bool .
 
-1 errors detected
+2 errors detected
