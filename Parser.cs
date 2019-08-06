@@ -49,21 +49,22 @@ public class Parser {
 	public const int lbrackrbrack_Sym = 34;
 	public const int int_Sym = 35;
 	public const int bool_Sym = 36;
-	public const int barbar_Sym = 37;
-	public const int star_Sym = 38;
-	public const int percent_Sym = 39;
-	public const int slash_Sym = 40;
-	public const int andand_Sym = 41;
-	public const int equalequal_Sym = 42;
-	public const int bangequal_Sym = 43;
-	public const int less_Sym = 44;
-	public const int lessequal_Sym = 45;
-	public const int greater_Sym = 46;
-	public const int greaterequal_Sym = 47;
-	public const int NOT_SYM = 48;
+	public const int char_Sym = 37;
+	public const int barbar_Sym = 38;
+	public const int star_Sym = 39;
+	public const int percent_Sym = 40;
+	public const int slash_Sym = 41;
+	public const int andand_Sym = 42;
+	public const int equalequal_Sym = 43;
+	public const int bangequal_Sym = 44;
+	public const int less_Sym = 45;
+	public const int lessequal_Sym = 46;
+	public const int greater_Sym = 47;
+	public const int greaterequal_Sym = 48;
+	public const int NOT_SYM = 49;
 	// pragmas
 
-	public const int maxT = 48;
+	public const int maxT = 49;
 
 	const bool T = true;
 	const bool x = false;
@@ -177,7 +178,7 @@ public class Parser {
 			ConstDeclarations();
 			break;
 		}
-		case int_Sym: case bool_Sym: {
+		case int_Sym: case bool_Sym: case char_Sym: {
 			VarDeclarations();
 			break;
 		}
@@ -221,7 +222,7 @@ public class Parser {
 			BreakStatement();
 			break;
 		}
-		default: SynErr(49); break;
+		default: SynErr(50); break;
 		}
 	}
 
@@ -350,7 +351,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == null_Sym) {
 			Get();
-		} else SynErr(50);
+		} else SynErr(51);
 	}
 
 	static void Type() {
@@ -405,7 +406,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == identifier_Sym) {
 			Designator();
-		} else SynErr(51);
+		} else SynErr(52);
 	}
 
 	static void WriteElement() {
@@ -413,7 +414,7 @@ public class Parser {
 			Get();
 		} else if (StartOf(3)) {
 			Expression();
-		} else SynErr(52);
+		} else SynErr(53);
 	}
 
 	static void AddExp() {
@@ -457,7 +458,7 @@ public class Parser {
 			Get();
 			break;
 		}
-		default: SynErr(53); break;
+		default: SynErr(54); break;
 		}
 	}
 
@@ -476,7 +477,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == barbar_Sym) {
 			Get();
-		} else SynErr(54);
+		} else SynErr(55);
 	}
 
 	static void Factor() {
@@ -497,7 +498,7 @@ public class Parser {
 			Get();
 			Expression();
 			Expect(rparen_Sym);
-		} else SynErr(55);
+		} else SynErr(56);
 	}
 
 	static void MulOp() {
@@ -509,7 +510,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == andand_Sym) {
 			Get();
-		} else SynErr(56);
+		} else SynErr(57);
 	}
 
 	static void BasicType() {
@@ -517,7 +518,9 @@ public class Parser {
 			Get();
 		} else if (la.kind == bool_Sym) {
 			Get();
-		} else SynErr(57);
+		} else if (la.kind == char_Sym) {
+			Get();
+		} else SynErr(58);
 	}
 
 
@@ -532,12 +535,12 @@ public class Parser {
 	}
 
 	static bool[,] set = {
-		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
-		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,x,x,T, x,T,T,x, T,T,T,T, T,T,x,x, x,x,x,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
-		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,T,T, x,x},
-		{x,T,T,x, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
-		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x},
-		{x,x,T,x, T,x,x,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x}
+		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,x,x,T, x,T,T,x, T,T,T,T, T,T,x,x, x,x,x,T, T,T,x,x, x,x,x,x, x,x,x,x, x,x,x},
+		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,T, T,x,x},
+		{x,T,T,x, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x},
+		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,x, x,x,x,x, x,x,x},
+		{x,x,T,x, T,x,x,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x}
 
 	};
 
@@ -686,27 +689,28 @@ public class Errors {
 			case 34: s = "\"[]\" expected"; break;
 			case 35: s = "\"int\" expected"; break;
 			case 36: s = "\"bool\" expected"; break;
-			case 37: s = "\"||\" expected"; break;
-			case 38: s = "\"*\" expected"; break;
-			case 39: s = "\"%\" expected"; break;
-			case 40: s = "\"/\" expected"; break;
-			case 41: s = "\"&&\" expected"; break;
-			case 42: s = "\"==\" expected"; break;
-			case 43: s = "\"!=\" expected"; break;
-			case 44: s = "\"<\" expected"; break;
-			case 45: s = "\"<=\" expected"; break;
-			case 46: s = "\">\" expected"; break;
-			case 47: s = "\">=\" expected"; break;
-			case 48: s = "??? expected"; break;
-			case 49: s = "invalid Statement"; break;
-			case 50: s = "invalid Constant"; break;
-			case 51: s = "invalid ReadElement"; break;
-			case 52: s = "invalid WriteElement"; break;
-			case 53: s = "invalid RelOp"; break;
-			case 54: s = "invalid AddOp"; break;
-			case 55: s = "invalid Factor"; break;
-			case 56: s = "invalid MulOp"; break;
-			case 57: s = "invalid BasicType"; break;
+			case 37: s = "\"char\" expected"; break;
+			case 38: s = "\"||\" expected"; break;
+			case 39: s = "\"*\" expected"; break;
+			case 40: s = "\"%\" expected"; break;
+			case 41: s = "\"/\" expected"; break;
+			case 42: s = "\"&&\" expected"; break;
+			case 43: s = "\"==\" expected"; break;
+			case 44: s = "\"!=\" expected"; break;
+			case 45: s = "\"<\" expected"; break;
+			case 46: s = "\"<=\" expected"; break;
+			case 47: s = "\">\" expected"; break;
+			case 48: s = "\">=\" expected"; break;
+			case 49: s = "??? expected"; break;
+			case 50: s = "invalid Statement"; break;
+			case 51: s = "invalid Constant"; break;
+			case 52: s = "invalid ReadElement"; break;
+			case 53: s = "invalid WriteElement"; break;
+			case 54: s = "invalid RelOp"; break;
+			case 55: s = "invalid AddOp"; break;
+			case 56: s = "invalid Factor"; break;
+			case 57: s = "invalid MulOp"; break;
+			case 58: s = "invalid BasicType"; break;
 
 			default: s = "error " + n; break;
 		}

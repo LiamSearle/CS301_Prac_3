@@ -64,7 +64,7 @@
                         | "new" BasicType "[" Expression "]"
                         | "!" Factor | "(" Expression ")" .
     Type              = BasicType [ "[]" ] .
-    BasicType         = "int" | "bool" .
+    BasicType         = "int" | "bool" | "char" .
     AddOp             = "+" | "-" | "||" .
     MulOp             = "*" | "%" | "/" | "&&" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .

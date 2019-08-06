@@ -1,14 +1,7 @@
 
    1 void main () {
-   2 	int age = 0;
-   3     for(int i=0;i<23;i=i+1)
-   4 	{
-   5 		asd = 10;
-   6 		age = 0;
-   7 		time = 01;
-**** 		        ^ ";" expected
-   8 		break;
-   9 	}
-  10 }
+   2 	char mak = 't';
+   3 	char[] matt = new char[100];
+   4 }
 
-1 errors detected
+0 errors detected
