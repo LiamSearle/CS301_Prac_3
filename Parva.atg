@@ -28,52 +28,60 @@
   PRODUCTIONS
     Parva             = "void" identifier "(" ")" Block .
     Block             = "{" { Statement } "}" .
-    Statement         =   Block | ";"
-                        | ConstDeclarations | VarDeclarations
-                        | Assignment | IfStatement | WhileStatement
-                        | RepeatUntil | ForLoop | ReturnStatement 
-						| HaltStatement | ReadStatement 
-						| WriteStatement | BreakStatement
-						| ReadLine | WriteLine | SetAssignment|DoWhileStatement .
-
+    Statement         = Block 
+						| ";"
+                        | ConstDeclarations 
+						| VarDeclarations
+                        | Assignment 
+						| IfStatement
+						| WhileStatement
+                        | RepeatUntil 
+						| ForLoop
+						| ReturnStatement 
+						| HaltStatement 
+						| ReadStatement 
+						| WriteStatement 
+						| BreakStatement
+						| ReadLine 
+						| WriteLine 
+						| DoWhileStatement .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
-    Constant          =   number | charLit
-                        | "true" | "false" | "null" .
+    Constant          = number | charLit | "true" | "false" | "null" .
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
     Assignment        = Designator ("=" Expression | "++" | "--") ";"
-							| ("--" | "++") Designator ";" .
+						| ("--" | "++") Designator ";" .
 	ForAssignment     = Designator ("=" Expression | "++" | "--")
-							| ("--" | "++") Designator .
-	SetAssignment     = Designator (("=" Expression ";" )).
+					    | ("--" | "++") Designator .
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
     DoWhileStatement  = "do" {Statement} "while" "(" Condition ")" ";". //Doesn't work but hey, it's trying.
-	  RepeatUntil		    = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
-	  ForLoop			      = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
+	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
+	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
-	  BreakStatement	  = "break" ";" .
+	BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
-                                   { "," ReadElement } ")" ";" .
+                         { "," ReadElement } ")" ";" .
 	ReadLine		  = "readLine" "(" [ReadElement
-                                   { "," ReadElement }] ")" ";" .
+                         { "," ReadElement }] ")" ";" .
 	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
-                                    { "," WriteElement } ")" ";" .
+                         { "," WriteElement } ")" ";" .
 	WriteLine		  = "writeLine" "(" [WriteElement
-                                    { "," WriteElement }] ")" ";" .
+                         { "," WriteElement }] ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .
     Expression        = AddExp [ RelOp AddExp ] .
     AddExp            = [ "+" | "-" ] Term { AddOp Term } .
     Term              = Factor { MulOp Factor } .
-    Factor            =   Designator | Constant
+    Factor            = Designator | Constant
                         | "new" BasicType "[" Expression "]"
-                        | "!" Factor | "(" Expression ")" | "{" {Expression}{"," Expression} "}"   .
+                        | "!" Factor | "(" Expression ")" 
+						| "{" {Expression [".." Expression]}{"," Expression [".." Expression]} "}"   .
     Type              = BasicType [ "[]" ] .
     BasicType         = "int" | "bool" | "char" | "set"  .
     AddOp             = "+" | "-" | "||" .
