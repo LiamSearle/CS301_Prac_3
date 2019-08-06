@@ -1,10 +1,14 @@
 
-   1   a=true;
-   2   b = false;
-   3   c = a and b or true;
-   4   d = !true || false;
-   5   e = ! not true;
-   6   f = x || !y && z;
-   7   g = a && (b or c) and d;
+   1 void main () {
+   2 	a = 5;
+   3 	a++;
+   4 	a--;
+   5 	--a;
+   6 	++a;
+   7 	a[n]++;
+   8 	for(int i=0; i<42; i++) {
+   9 		write("Lmao");
+  10 	}
+  11 }
 
 0 errors detected

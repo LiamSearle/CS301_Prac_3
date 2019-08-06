@@ -41,8 +41,10 @@
                         | "true" | "false" | "null" .
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
-    Assignment        = Designator "=" Expression ";" .
-	ForAssignment     = Designator "=" Expression .
+    Assignment        = Designator ("=" Expression | "++" | "--") ";"
+							| ("--" | "++") Designator ";" .
+	ForAssignment     = Designator ("=" Expression | "++" | "--")
+							| ("--" | "++") Designator .
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
