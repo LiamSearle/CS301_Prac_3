@@ -32,7 +32,9 @@
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
                         | RepeatUntil | ForLoop | ReturnStatement 
-						| HaltStatement | ReadStatement | WriteStatement | BreakStatement .
+						| HaltStatement | ReadStatement 
+						| WriteStatement | BreakStatement 
+						| ReadLine | WriteLine .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -52,8 +54,12 @@
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .
-    ReadElement       = stringLit | Designator .
+	ReadLine		  = "readLine" "(" ReadElement
+                                   { "." ReadElement } ")" ";" .
+	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
+                                    { "," WriteElement } ")" ";" .
+	WriteLine		  = "writeLine" "(" WriteElement
                                     { "," WriteElement } ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .

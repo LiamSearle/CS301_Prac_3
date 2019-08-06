@@ -1,7 +1,6 @@
 
    1 void main () {
-   2 	char mak = 't';
-   3 	char[] matt = new char[100];
-   4 }
+   2 	writeLine("I find that hard to believe");
+   3 }
 
 0 errors detected

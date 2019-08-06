@@ -1,4 +1,3 @@
 void main () {
-	char mak = 't';
-	char[] matt = new char[100];
+	writeLine("I find that hard to believe");
 }
