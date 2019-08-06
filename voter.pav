@@ -6,4 +6,8 @@ void main () {
 	//all = {0 .. 14};
 	even = all - odd;
 	//if (200 in all) writeLine("Dam you, Robin");
+	writeLine();  //this needs to pass
+	readLine();   //as does this
+	read(); //this should fail
+	write(); //as should this
 }
