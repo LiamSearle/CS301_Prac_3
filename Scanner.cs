@@ -63,8 +63,8 @@ public class Scanner {
 	const char EOL = '\n';
 	const int  eofSym = 0;
 	const int charSetSize = 256;
-	const int maxT = 54;
-	const int noSym = 54;
+	const int maxT = 55;
+	const int noSym = 55;
 	// terminals
 	const int EOF_SYM = 0;
 	const int identifier_Sym = 1;
@@ -109,18 +109,19 @@ public class Scanner {
 	const int int_Sym = 40;
 	const int bool_Sym = 41;
 	const int char_Sym = 42;
-	const int barbar_Sym = 43;
-	const int star_Sym = 44;
-	const int percent_Sym = 45;
-	const int slash_Sym = 46;
-	const int andand_Sym = 47;
-	const int equalequal_Sym = 48;
-	const int bangequal_Sym = 49;
-	const int less_Sym = 50;
-	const int lessequal_Sym = 51;
-	const int greater_Sym = 52;
-	const int greaterequal_Sym = 53;
-	const int NOT_SYM = 54;
+	const int set_Sym = 43;
+	const int barbar_Sym = 44;
+	const int star_Sym = 45;
+	const int percent_Sym = 46;
+	const int slash_Sym = 47;
+	const int andand_Sym = 48;
+	const int equalequal_Sym = 49;
+	const int bangequal_Sym = 50;
+	const int less_Sym = 51;
+	const int lessequal_Sym = 52;
+	const int greater_Sym = 53;
+	const int greaterequal_Sym = 54;
+	const int NOT_SYM = 55;
 	// pragmas
 
 	static short[] start = {
@@ -269,6 +270,7 @@ public class Scanner {
 			case "int": t.kind = int_Sym; break;
 			case "bool": t.kind = bool_Sym; break;
 			case "char": t.kind = char_Sym; break;
+			case "set": t.kind = set_Sym; break;
 			default: break;
 		}
 	}

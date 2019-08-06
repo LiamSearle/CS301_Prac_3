@@ -1,14 +1,13 @@
 
    1 void main () {
-   2 	a = 5;
-   3 	a++;
-   4 	a--;
-   5 	--a;
-   6 	++a;
-   7 	a[n]++;
-   8 	for(int i=0; i<42; i++) {
-   9 		write("Lmao");
-  10 	}
-  11 }
+   2 	set empty, odd, all, even;
+   3 	set[] c = new set[200];
+   4 	if (200 < 500) writeLine("fuck you, robin");
+   5 	//empty = {};
+   6 	//odd = {1,3,5,7,11,13};
+   7 	//all = {0 .. 14};
+   8 	even = all - odd;
+   9 	//if (200 in all) writeLine("Dam you, Robin");
+  10 }
 
 0 errors detected

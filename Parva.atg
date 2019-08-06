@@ -49,7 +49,7 @@
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
-	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" .
+	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
 	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
 	BreakStatement	  = "break" ";" .
@@ -72,7 +72,7 @@
                         | "new" BasicType "[" Expression "]"
                         | "!" Factor | "(" Expression ")" .
     Type              = BasicType [ "[]" ] .
-    BasicType         = "int" | "bool" | "char"  .
+    BasicType         = "int" | "bool" | "char" | "set"  .
     AddOp             = "+" | "-" | "||" .
     MulOp             = "*" | "%" | "/" | "&&" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .

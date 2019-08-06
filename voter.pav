@@ -1,11 +1,9 @@
 void main () {
-	a = 5;
-	a++;
-	a--;
-	--a;
-	++a;
-	a[n]++;
-	for(int i=0; i<42; i++) {
-		write("Lmao");
-	}
+	set empty, odd, all, even;
+	set[] c = new set[200];
+	//empty = {};
+	//odd = {1,3,5,7,11,13};
+	//all = {0 .. 14};
+	even = all - odd;
+	//if (200 in all) writeLine("Dam you, Robin");
 }

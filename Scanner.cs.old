@@ -63,8 +63,8 @@ public class Scanner {
 	const char EOL = '\n';
 	const int  eofSym = 0;
 	const int charSetSize = 256;
-	const int maxT = 54;
-	const int noSym = 54;
+	const int maxT = 56;
+	const int noSym = 56;
 	// terminals
 	const int EOF_SYM = 0;
 	const int identifier_Sym = 1;
@@ -90,37 +90,39 @@ public class Scanner {
 	const int if_Sym = 21;
 	const int else_Sym = 22;
 	const int while_Sym = 23;
-	const int repeat_Sym = 24;
-	const int until_Sym = 25;
-	const int for_Sym = 26;
-	const int return_Sym = 27;
-	const int break_Sym = 28;
-	const int halt_Sym = 29;
-	const int read_Sym = 30;
-	const int readLine_Sym = 31;
-	const int point_Sym = 32;
-	const int write_Sym = 33;
-	const int writeLine_Sym = 34;
-	const int plus_Sym = 35;
-	const int minus_Sym = 36;
-	const int new_Sym = 37;
-	const int bang_Sym = 38;
-	const int lbrackrbrack_Sym = 39;
-	const int int_Sym = 40;
-	const int bool_Sym = 41;
-	const int char_Sym = 42;
-	const int barbar_Sym = 43;
-	const int star_Sym = 44;
-	const int percent_Sym = 45;
-	const int slash_Sym = 46;
-	const int andand_Sym = 47;
-	const int equalequal_Sym = 48;
-	const int bangequal_Sym = 49;
-	const int less_Sym = 50;
-	const int lessequal_Sym = 51;
-	const int greater_Sym = 52;
-	const int greaterequal_Sym = 53;
-	const int NOT_SYM = 54;
+	const int do_Sym = 24;
+	const int repeat_Sym = 25;
+	const int until_Sym = 26;
+	const int for_Sym = 27;
+	const int return_Sym = 28;
+	const int break_Sym = 29;
+	const int halt_Sym = 30;
+	const int read_Sym = 31;
+	const int readLine_Sym = 32;
+	const int point_Sym = 33;
+	const int write_Sym = 34;
+	const int writeLine_Sym = 35;
+	const int plus_Sym = 36;
+	const int minus_Sym = 37;
+	const int new_Sym = 38;
+	const int bang_Sym = 39;
+	const int lbrackrbrack_Sym = 40;
+	const int int_Sym = 41;
+	const int bool_Sym = 42;
+	const int char_Sym = 43;
+	const int set_Sym = 44;
+	const int barbar_Sym = 45;
+	const int star_Sym = 46;
+	const int percent_Sym = 47;
+	const int slash_Sym = 48;
+	const int andand_Sym = 49;
+	const int equalequal_Sym = 50;
+	const int bangequal_Sym = 51;
+	const int less_Sym = 52;
+	const int lessequal_Sym = 53;
+	const int greater_Sym = 54;
+	const int greaterequal_Sym = 55;
+	const int NOT_SYM = 56;
 	// pragmas
 
 	static short[] start = {
@@ -255,6 +257,7 @@ public class Scanner {
 			case "if": t.kind = if_Sym; break;
 			case "else": t.kind = else_Sym; break;
 			case "while": t.kind = while_Sym; break;
+			case "do": t.kind = do_Sym; break;
 			case "repeat": t.kind = repeat_Sym; break;
 			case "until": t.kind = until_Sym; break;
 			case "for": t.kind = for_Sym; break;
@@ -269,6 +272,7 @@ public class Scanner {
 			case "int": t.kind = int_Sym; break;
 			case "bool": t.kind = bool_Sym; break;
 			case "char": t.kind = char_Sym; break;
+			case "set": t.kind = set_Sym; break;
 			default: break;
 		}
 	}
