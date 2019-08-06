@@ -1,6 +1,10 @@
 
-   1 void main () {
-   2 	writeLine("I find that hard to believe");
-   3 }
+   1   a=true;
+   2   b = false;
+   3   c = a and b or true;
+   4   d = !true || false;
+   5   e = ! not true;
+   6   f = x || !y && z;
+   7   g = a && (b or c) and d;
 
 0 errors detected

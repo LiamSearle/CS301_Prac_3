@@ -1,3 +1,4 @@
 void main () {
-	writeLine("I find that hard to believe");
+	int i;
+	int i = 0;
 }
