@@ -56,13 +56,13 @@
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .
-	ReadLine		  = "readLine" "(" ReadElement
-                                   { "." ReadElement } ")" ";" .
+	ReadLine		  = "readLine" "(" [ReadElement
+                                   { "." ReadElement }] ")" ";" .
 	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
                                     { "," WriteElement } ")" ";" .
-	WriteLine		  = "writeLine" "(" WriteElement
-                                    { "," WriteElement } ")" ";" .
+	WriteLine		  = "writeLine" "(" [WriteElement
+                                    { "," WriteElement }] ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .
     Expression        = AddExp [ RelOp AddExp ] .
