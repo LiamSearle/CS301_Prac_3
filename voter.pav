@@ -1,15 +1,12 @@
 void main () {
-	set empty, odd, all, even;
-	set[] c = new set[200];
-	//empty = {};
-	//odd = {1,3,5,7,11,13};
-	//all = {0 .. 14};
-	even = all - odd;
+	//set empty, odd, all, even;
+	//set a,b,full = all;
+	a = {1..12, 15,20..30};
+	b = odd * a; //intersection
+	//set[] c = new set[200];
+	empty = {};
+	odd = {1,3,5,7,11,13};
+	all = {0 .. 14};
+	//even = all - odd;
 	//if (200 in all) writeLine("Dam you, Robin");
-	writeLine("hello there");
-	readLine("hello" . age); //according to the prac this is the syntax she wants (need to check the test files to see if they are the same)
-	writeLine();  //this needs to pass
-	readLine();   //as does this
-	read(); //this should fail
-	write(); //as should this
 }

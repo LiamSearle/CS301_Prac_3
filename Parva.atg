@@ -57,7 +57,7 @@
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .
 	ReadLine		  = "readLine" "(" [ReadElement
-                                   { "." ReadElement }] ")" ";" .
+                                   { "," ReadElement }] ")" ";" .
 	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
                                     { "," WriteElement } ")" ";" .
@@ -74,6 +74,6 @@
     Type              = BasicType [ "[]" ] .
     BasicType         = "int" | "bool" | "char" | "set"  .
     AddOp             = "+" | "-" | "||" .
-    MulOp             = "*" | "%" | "/" | "&&" .
+    MulOp             = "*" | "%" | "/" | "&&" | "in" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
   END Parva.
