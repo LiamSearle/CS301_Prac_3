@@ -1,0 +1,32 @@
+  LL1 warning in Expression: value is the start of several alternatives
+  LL1 warning in Term: value is the start of several alternatives
+
+   1 COMPILER Bool  $CN
+   2 /* Simple logical thingy mabob.
+   3    Liam Searle, Makungu Chansa, Matthew Lewis, Rhodes University, 2019 */
+   4 
+   5 CHARACTERS
+   6   term 		   = "abcdefghijklmnopqrstuvwxyz" .		
+   7   t     	   = "true" .
+   8   f 		   = "false" . 
+   9   
+  10 TOKENS
+  11   value   = (t|f) | term.
+  12   start   = term "=".
+  13   
+  14 IGNORE CHR(0) .. CHR(31)
+  15   
+  16 PRODUCTIONS
+  17   Bool    	 = {start Expression } EOF. 
+  18   Expression = Term | Term Operator | "!" Term   . 
+  19   Operator 	 = Not  | And | Or  .
+  20   Or		 = ("||" | "or") Expression .
+  21   And		 = ("&&" | "and") Expression .
+  22   Not 		 = ("!"  | "not") Expression .
+  23   Term 		 = value | value ";".
+  24 END Bool .
+  25 
+  26 
+
+0 errors detected
+2 warnings detected

@@ -4,18 +4,23 @@ COMPILER Bool  $CN
 
 CHARACTERS
   term 		   = "abcdefghijklmnopqrstuvwxyz" .		
-  bool	       = "true" + "false" .
+  t     	   = "true" .
+  f 		   = "false" . 
   
 TOKENS
-  value   = bool | term .
-
+  value   = (t|f) | term.
+  start   = term "=".
+  
 IGNORE CHR(0) .. CHR(31)
   
 PRODUCTIONS
-  Bool    = { value "=" Expression} EOF . 
-  Expression = value [Operator] | "!" value | value . 
-  Operator 	 = Or Expression | Not Expression | And Expression .
-  Or		 = "||" | "or" .
-  And		 = "&&" | "and" .
-  Not 		 = "!"  | "not" .
+  Bool    	 = {start Expression } EOF. 
+  Expression = Term | Term Operator | "!" Term   . 
+  Operator 	 = Not  | And | Or  .
+  Or		 = ("||" | "or") Expression .
+  And		 = ("&&" | "and") Expression .
+  Not 		 = ("!"  | "not") Expression .
+  Term 		 = value | value ";".
 END Bool .
+
+
