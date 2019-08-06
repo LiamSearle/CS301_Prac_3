@@ -31,7 +31,7 @@
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
                         | ReturnStatement | HaltStatement
-                        | ReadStatement | WriteStatement | ElseStatement .
+                        | ReadStatement | WriteStatement  .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -40,7 +40,7 @@
     OneVar            = identifier [ "=" Expression ] .
     Assignment        = Designator "=" Expression ";" .
     Designator        = identifier [ "[" Expression "]" ] .
-    IfStatement       = "if" "(" Condition ")" Statement .
+    IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
     ReturnStatement   = "return" ";" .
@@ -61,6 +61,6 @@
     Type              = BasicType [ "[]" ] .
     BasicType         = "int" | "bool" .
     AddOp             = "+" | "-" | "||" .
-    MulOp             = "*" | "/" | "&&" | "%" .
+    MulOp             = "*" | "%" | "/" | "&&" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
   END Parva.
