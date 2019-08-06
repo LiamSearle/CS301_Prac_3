@@ -32,9 +32,9 @@
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
                         | RepeatUntil | ForLoop | ReturnStatement 
-						| HaltStatement | ReadStatement 
-						| WriteStatement | BreakStatement
-						| ReadLine | WriteLine .
+						            | HaltStatement | ReadStatement 
+						            | WriteStatement | BreakStatement
+						            | ReadLine | WriteLine | DoWhileStatement .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -49,10 +49,11 @@
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
-	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
-	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
+    DoWhileStatement  = "do" {Statement} "while" "(" Condition ")" ";". //Doesn't work but hey, it's trying.
+	  RepeatUntil		    = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
+	  ForLoop			      = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
-	BreakStatement	  = "break" ";" .
+	  BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .

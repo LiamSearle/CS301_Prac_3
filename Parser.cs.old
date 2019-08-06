@@ -202,7 +202,7 @@ public class Parser {
 			break;
 		}
 		case do_Sym: {
-			DoWhile();
+			DoWhileStatement();
 			break;
 		}
 		case repeat_Sym: {
@@ -307,9 +307,8 @@ public class Parser {
 		Statement();
 	}
 
-	static void DoWhile() {
+	static void DoWhileStatement() {
 		Expect(do_Sym);
-		Statement();
 		while (StartOf(1)) {
 			Statement();
 		}
@@ -386,10 +385,12 @@ public class Parser {
 	static void ReadLine() {
 		Expect(readLine_Sym);
 		Expect(lparen_Sym);
-		ReadElement();
-		while (la.kind == point_Sym) {
-			Get();
+		if (la.kind == identifier_Sym || la.kind == stringLit_Sym) {
 			ReadElement();
+			while (la.kind == point_Sym) {
+				Get();
+				ReadElement();
+			}
 		}
 		Expect(rparen_Sym);
 		Expect(semicolon_Sym);
@@ -398,10 +399,12 @@ public class Parser {
 	static void WriteLine() {
 		Expect(writeLine_Sym);
 		Expect(lparen_Sym);
-		WriteElement();
-		while (la.kind == comma_Sym) {
-			Get();
+		if (StartOf(2)) {
 			WriteElement();
+			while (la.kind == comma_Sym) {
+				Get();
+				WriteElement();
+			}
 		}
 		Expect(rparen_Sym);
 		Expect(semicolon_Sym);
@@ -444,7 +447,7 @@ public class Parser {
 
 	static void Expression() {
 		AddExp();
-		if (StartOf(2)) {
+		if (StartOf(3)) {
 			RelOp();
 			AddExp();
 		}
@@ -500,7 +503,7 @@ public class Parser {
 	static void WriteElement() {
 		if (la.kind == stringLit_Sym) {
 			Get();
-		} else if (StartOf(3)) {
+		} else if (StartOf(4)) {
 			Expression();
 		} else SynErr(64);
 	}
@@ -552,7 +555,7 @@ public class Parser {
 
 	static void Term() {
 		Factor();
-		while (StartOf(4)) {
+		while (StartOf(5)) {
 			MulOp();
 			Factor();
 		}
@@ -571,7 +574,7 @@ public class Parser {
 	static void Factor() {
 		if (la.kind == identifier_Sym) {
 			Designator();
-		} else if (StartOf(5)) {
+		} else if (StartOf(6)) {
 			Constant();
 		} else if (la.kind == new_Sym) {
 			Get();
@@ -627,6 +630,7 @@ public class Parser {
 	static bool[,] set = {
 		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,T,T,x, x,T,x,T, T,T,x,T, T,T,T,T, T,x,T,T, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,T,T,T, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,T,T, x,x},
 		{x,T,T,x, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x},
