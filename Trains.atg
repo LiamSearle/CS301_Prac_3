@@ -14,6 +14,5 @@ PRODUCTIONS
   LocoPart  = "loco" { "loco" } .
   GoodsPart = Truck { Truck } .
   HumanPart = "brake" | { "coach" } "guard" .
-  Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
-  FuelPart  = "fuel" .
+  Truck     = "coal" | "closed" | "open" | "cattle" | "fuel" .
 END Trains.
