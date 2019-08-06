@@ -1,11 +1,88 @@
+  LL1 warning in Statement: identifier is the start of several alternatives
+  LL1 warning in IfStatement: "else" is the start & successor of a deletable structure
+  LL1 warning in AddExp: "+" is the start & successor of a deletable structure
+  LL1 warning in AddExp: "-" is the start & successor of a deletable structure
 
-   1   a=true;
-****   ^ EOF expected
-   2   b = false;
-   3   c = a and b or true;
-   4   d = !true;
-   5   e = ! not true;
-   6   f = x || !y && z;
-   7   g = a && (b or c) and d;
+   1   COMPILER Parva $CN
+   2   /* Parva level 1 grammar  - Coco/R for C# (EBNF)
+   3      P.D. Terry, Rhodes University, 2003
+   4      Grammar only */
+   5 
+   6   CHARACTERS
+   7     lf         = CHR(10) .
+   8     backslash  = CHR(92) .
+   9     control    = CHR(0) .. CHR(31) .
+  10     letter     = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  11                  + "abcdefghijklmnopqrstuvwxyz" .
+  12     digit      = "123456789" .
+  13 	numbers     = digit + "0" .
+  14     stringCh   = ANY - '"' - control - backslash .
+  15     charCh     = ANY - "'" - control - backslash .
+  16     printable  = ANY - control .
+  17 
+  18   TOKENS
+  19     identifier = letter { letter | digit | "_" } .
+  20     number     = "0" | (digit { numbers } ).
+  21     stringLit  = '"' { stringCh | backslash printable } '"' .
+  22     charLit    = "'" ( charCh   | backslash printable ) "'" .
+  23 
+  24   COMMENTS FROM "//" TO lf
+  25   COMMENTS FROM "/*" TO "*/"
+  26   IGNORE CHR(9) .. CHR(13)
+  27 
+  28   PRODUCTIONS
+  29     Parva             = "void" identifier "(" ")" Block .
+  30     Block             = "{" { Statement } "}" .
+  31     Statement         =   Block | ";"
+  32                         | ConstDeclarations | VarDeclarations
+  33                         | Assignment | IfStatement | WhileStatement
+  34                         | RepeatUntil | ForLoop | ReturnStatement 
+  35 						| HaltStatement | ReadStatement 
+  36 						| WriteStatement | BreakStatement
+  37 						| ReadLine | WriteLine | SetAssignment.
+  38     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
+  39     OneConst          = identifier "=" Constant .
+  40     Constant          =   number | charLit
+  41                         | "true" | "false" | "null" .
+  42     VarDeclarations   = Type OneVar { "," OneVar } ";" .
+  43     OneVar            = identifier [ "=" Expression ] .
+  44     Assignment        = Designator ("=" Expression | "++" | "--") ";"
+  45 							| ("--" | "++") Designator ";" .
+  46 	ForAssignment     = Designator ("=" Expression | "++" | "--")
+  47 							| ("--" | "++") Designator .
+  48 	SetAssignment     = Designator (("=" Expression ";" )).
+  49     Designator        = identifier [ "[" Expression "]" ] .
+  50     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
+  51     ElseStatement     = "else" Statement .
+  52     WhileStatement    = "while" "(" Condition ")" Statement .
+  53 	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
+  54 	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
+  55     ReturnStatement   = "return" ";" .
+  56 	BreakStatement	  = "break" ";" .
+  57     HaltStatement     = "halt" ";" .
+  58     ReadStatement     = "read" "(" ReadElement
+  59                                    { "," ReadElement } ")" ";" .
+  60 	ReadLine		  = "readLine" "(" [ReadElement
+  61                                    { "." ReadElement }] ")" ";" .
+  62 	ReadElement       = stringLit | Designator .
+  63     WriteStatement    = "write" "(" WriteElement
+  64                                     { "," WriteElement } ")" ";" .
+  65 	WriteLine		  = "writeLine" "(" [WriteElement
+  66                                     { "," WriteElement }] ")" ";" .
+  67     WriteElement      = stringLit | Expression .
+  68     Condition         = Expression .
+  69     Expression        = AddExp [ RelOp AddExp ] .
+  70     AddExp            = [ "+" | "-" ] Term { AddOp Term } .
+  71     Term              = Factor { MulOp Factor } .
+  72     Factor            =   Designator | Constant
+  73                         | "new" BasicType "[" Expression "]"
+  74                         | "!" Factor | "(" Expression ")" | "{" {Expression}{"," Expression} "}"   .
+  75     Type              = BasicType [ "[]" ] .
+  76     BasicType         = "int" | "bool" | "char" | "set"  .
+  77     AddOp             = "+" | "-" | "||" .
+  78     MulOp             = "*" | "%" | "/" | "&&" .
+  79     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
+  80   END Parva.
 
-1 errors detected
+0 errors detected
+4 warnings detected

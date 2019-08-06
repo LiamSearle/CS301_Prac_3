@@ -33,34 +33,37 @@
                         | Assignment | IfStatement | WhileStatement
                         | RepeatUntil | ForLoop | ReturnStatement 
 						| HaltStatement | ReadStatement 
-						| WriteStatement | BreakStatement 
-						| ReadLine | WriteLine .
+						| WriteStatement | BreakStatement
+						| ReadLine | WriteLine | SetAssignment.
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
                         | "true" | "false" | "null" .
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
-    Assignment        = Designator "=" Expression ";" .
-	ForAssignment        = Designator "=" Expression .
+    Assignment        = Designator ("=" Expression | "++" | "--") ";"
+							| ("--" | "++") Designator ";" .
+	ForAssignment     = Designator ("=" Expression | "++" | "--")
+							| ("--" | "++") Designator .
+	SetAssignment     = Designator (("=" Expression ";" )).
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
-	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" .
+	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
 	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
 	BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .
-	ReadLine		  = "readLine" "(" ReadElement
-                                   { "." ReadElement } ")" ";" .
+	ReadLine		  = "readLine" "(" [ReadElement
+                                   { "." ReadElement }] ")" ";" .
 	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
                                     { "," WriteElement } ")" ";" .
-	WriteLine		  = "writeLine" "(" WriteElement
-                                    { "," WriteElement } ")" ";" .
+	WriteLine		  = "writeLine" "(" [WriteElement
+                                    { "," WriteElement }] ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .
     Expression        = AddExp [ RelOp AddExp ] .
@@ -68,9 +71,9 @@
     Term              = Factor { MulOp Factor } .
     Factor            =   Designator | Constant
                         | "new" BasicType "[" Expression "]"
-                        | "!" Factor | "(" Expression ")" .
+                        | "!" Factor | "(" Expression ")" | "{" {Expression}{"," Expression} "}"   .
     Type              = BasicType [ "[]" ] .
-    BasicType         = "int" | "bool" | "char" .
+    BasicType         = "int" | "bool" | "char" | "set"  .
     AddOp             = "+" | "-" | "||" .
     MulOp             = "*" | "%" | "/" | "&&" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .

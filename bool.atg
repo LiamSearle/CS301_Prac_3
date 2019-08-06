@@ -3,24 +3,24 @@ COMPILER Bool  $CN
    Liam Searle, Makungu Chansa, Matthew Lewis, Rhodes University, 2019 */
 
 CHARACTERS
-  term 		   = "abcdefghijklmnopqrstuvwxyz" .		
-  t     	   = "true" .
-  f 		   = "false" . 
+  term 		   = "abcdefghijklmnopqrstuvwxyz" .		 
   
 TOKENS
-  value   = (t|f) | term.
-  start   = term "=".
+  ident   = term.
+  value    = "true" | "false".
   
 IGNORE CHR(0) .. CHR(31)
   
 PRODUCTIONS
-  Bool    	 = {start Expression } EOF. 
-  Expression = Term | Term Operator | "!" Term   . 
-  Operator 	 = Not  | And | Or  .
-  Or		 = ("||" | "or")  .
-  And		 = ("&&" | "and")  .
-  Not 		 = ("!"  | "not")  .
-  Term 		 = value | value ";".
-END Bool.
+  Bool    	   = {ident "=" Expression  ";"} EOF. 
+  Expression   = Not | Term [Operator]   | BracketyBois [Operator]. 
+  Operator 	   = Not  | And | Or  .
+  Or		   = ("||" | "or") Expression .
+  And		   = ("&&" | "and") Expression .
+  Not 		   = ("!"  | "not") Expression .
+  BracketyBois = "(" Expression ")"  . 
+  Term 		   = ident|value .
+END Bool .
+
 
 

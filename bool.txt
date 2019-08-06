@@ -1,7 +1,7 @@
   a=true;
   b = false;
   c = a and b or true;
-  d = !true;
+  d = !true || false;
   e = ! not true;
   f = x || !y && z;
   g = a && (b or c) and d;
