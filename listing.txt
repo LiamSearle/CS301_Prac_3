@@ -1,34 +1,11 @@
 
-<<<<<<< HEAD
-   1 COMPILER Calc  $CN
-   2 /* Simple four function calculator
-   3    P.D. Terry, Rhodes University, 2017 */
-   4 
-   5 CHARACTERS
-   6   digit      = "0123456789" .
-   7   hexdigit   = digit + "ABCDEF" .
-   8 
-   9 TOKENS
-  10   decNumber  = digit { digit } .
-  11   hexNumber  = "$" hexdigit { hexdigit } .
-  12 
-  13 IGNORE CHR(0) .. CHR(31)
-  14 
-  15 PRODUCTIONS
-  16   Calc       = { Expression "=" } EOF .
-  17   Expression = Term { "+" Term  |  "-" Term } .
-  18   Term       = Factor { "*" Factor |  "/" Factor } .
-  19   Factor     = decNumber | hexNumber .
-  20 END Calc.
-
-0 errors detected
-=======
-   1 (((((((((((1))))))))))) = 
-   2 5! = 
-   3 ! (5)! = 
-**** ^ EOF expected
-   4 abs (6 - 12) = 
-   5 abs (2 + abs(2))! = 
+   1   a=true;
+****   ^ EOF expected
+   2   b = false;
+   3   c = a and b or true;
+   4   d = !true;
+   5   e = ! not true;
+   6   f = x || !y && z;
+   7   g = a && (b or c) and d;
 
 1 errors detected
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2

@@ -3,29 +3,27 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Calc {
+namespace Bool {
 
 public class Parser {
 	public const int _EOF = 0;
-	public const int _decNumber = 1;
-	public const int _hexNumber = 2;
+	public const int _value = 1;
+	public const int _start = 2;
 	// terminals
 	public const int EOF_SYM = 0;
-	public const int decNumber_Sym = 1;
-	public const int hexNumber_Sym = 2;
-	public const int equal_Sym = 3;
-	public const int plus_Sym = 4;
-	public const int minus_Sym = 5;
-	public const int star_Sym = 6;
-	public const int slash_Sym = 7;
-	public const int lparen_Sym = 8;
-	public const int rparen_Sym = 9;
-	public const int bang_Sym = 10;
-	public const int abs_Sym = 11;
-	public const int NOT_SYM = 12;
+	public const int value_Sym = 1;
+	public const int start_Sym = 2;
+	public const int bang_Sym = 3;
+	public const int barbar_Sym = 4;
+	public const int or_Sym = 5;
+	public const int andand_Sym = 6;
+	public const int and_Sym = 7;
+	public const int not_Sym = 8;
+	public const int semicolon_Sym = 9;
+	public const int NOT_SYM = 10;
 	// pragmas
 
-	public const int maxT = 12;
+	public const int maxT = 10;
 
 	const bool T = true;
 	const bool x = false;
@@ -109,75 +107,67 @@ public class Parser {
 		}
 	}
 
-	static void Calc() {
-		while (StartOf(1)) {
+	static void Bool() {
+		while (la.kind == start_Sym) {
+			Get();
 			Expression();
-			Expect(equal_Sym);
 		}
 		Expect(EOF_SYM);
 	}
 
 	static void Expression() {
-		Term();
-		while (la.kind == plus_Sym || la.kind == minus_Sym) {
-			if (la.kind == plus_Sym) {
-				Get();
-				Term();
-			} else {
-				Get();
-				Term();
-			}
-		}
+		if (la.kind == value_Sym) {
+			Term();
+		} else if (la.kind == value_Sym) {
+			Term();
+			Operator();
+		} else if (la.kind == bang_Sym) {
+			Get();
+			Term();
+		} else SynErr(11);
 	}
 
 	static void Term() {
-		Parent();
-		while (la.kind == star_Sym || la.kind == slash_Sym) {
-			if (la.kind == star_Sym) {
-				Get();
-				Parent();
-			} else {
-				Get();
-				Parent();
-			}
-		}
+		if (la.kind == value_Sym) {
+			Get();
+		} else if (la.kind == value_Sym) {
+			Get();
+			Expect(semicolon_Sym);
+		} else SynErr(12);
 	}
 
-	static void Parent() {
-		if (la.kind == lparen_Sym) {
-			Get();
-			Expression();
-			Expect(rparen_Sym);
-		} else if (la.kind == decNumber_Sym || la.kind == hexNumber_Sym || la.kind == minus_Sym) {
-			Factor();
-			while (la.kind == bang_Sym) {
-				Get();
-			}
-		} else if (la.kind == abs_Sym) {
-			Get();
-			Expect(lparen_Sym);
-			Expression();
-			Expect(rparen_Sym);
-			while (la.kind == bang_Sym) {
-				Get();
-			}
+	static void Operator() {
+		if (la.kind == bang_Sym || la.kind == not_Sym) {
+			Not();
+		} else if (la.kind == andand_Sym || la.kind == and_Sym) {
+			And();
+		} else if (la.kind == barbar_Sym || la.kind == or_Sym) {
+			Or();
 		} else SynErr(13);
 	}
 
-	static void Factor() {
-		if (la.kind == minus_Sym) {
+	static void Not() {
+		if (la.kind == bang_Sym) {
 			Get();
-			Expect(decNumber_Sym);
-		} else if (la.kind == decNumber_Sym) {
-			Get();
-		} else if (la.kind == hexNumber_Sym) {
-			Get();
-		} else if (la.kind == minus_Sym) {
-			Get();
-			Expect(hexNumber_Sym);
-		} else if (la.kind == decNumber_Sym) {
+		} else if (la.kind == not_Sym) {
 			Get();
 		} else SynErr(14);
+	}
+
+	static void And() {
+		if (la.kind == andand_Sym) {
+			Get();
+		} else if (la.kind == and_Sym) {
+			Get();
+		} else SynErr(15);
+	}
+
+	static void Or() {
+		if (la.kind == barbar_Sym) {
+			Get();
+		} else if (la.kind == or_Sym) {
+			Get();
+		} else SynErr(16);
 	}
 
 
@@ -186,14 +176,13 @@ public class Parser {
 		la = new Token();
 		la.val = "";
 		Get();
-		Calc();
+		Bool();
 		Expect(EOF_SYM);
 
 	}
 
 	static bool[,] set = {
-		{T,x,x,x, x,x,x,x, x,x,x,x, x,x},
-		{x,T,T,x, x,T,x,x, T,x,x,T, x,x}
+		{T,x,x,x, x,x,x,x, x,x,x,x}
 
 	};
 
@@ -306,20 +295,22 @@ public class Errors {
 		string s;
 		switch (n) {
 			case 0: s = "EOF expected"; break;
-			case 1: s = "decNumber expected"; break;
-			case 2: s = "hexNumber expected"; break;
-			case 3: s = "\"=\" expected"; break;
-			case 4: s = "\"+\" expected"; break;
-			case 5: s = "\"-\" expected"; break;
-			case 6: s = "\"*\" expected"; break;
-			case 7: s = "\"/\" expected"; break;
-			case 8: s = "\"(\" expected"; break;
-			case 9: s = "\")\" expected"; break;
-			case 10: s = "\"!\" expected"; break;
-			case 11: s = "\"abs\" expected"; break;
-			case 12: s = "??? expected"; break;
-			case 13: s = "invalid Parent"; break;
-			case 14: s = "invalid Factor"; break;
+			case 1: s = "value expected"; break;
+			case 2: s = "start expected"; break;
+			case 3: s = "\"!\" expected"; break;
+			case 4: s = "\"||\" expected"; break;
+			case 5: s = "\"or\" expected"; break;
+			case 6: s = "\"&&\" expected"; break;
+			case 7: s = "\"and\" expected"; break;
+			case 8: s = "\"not\" expected"; break;
+			case 9: s = "\";\" expected"; break;
+			case 10: s = "??? expected"; break;
+			case 11: s = "invalid Expression"; break;
+			case 12: s = "invalid Term"; break;
+			case 13: s = "invalid Operator"; break;
+			case 14: s = "invalid Not"; break;
+			case 15: s = "invalid And"; break;
+			case 16: s = "invalid Or"; break;
 
 			default: s = "error " + n; break;
 		}

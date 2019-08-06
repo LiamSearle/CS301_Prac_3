@@ -1,4 +1,4 @@
-  a = true;
+  a=true;
   b = false;
   c = a and b or true;
   d = !true;

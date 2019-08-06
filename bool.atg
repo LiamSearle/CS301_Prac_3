@@ -1,0 +1,26 @@
+COMPILER Bool  $CN
+/* Simple logical thingy mabob.
+   Liam Searle, Makungu Chansa, Matthew Lewis, Rhodes University, 2019 */
+
+CHARACTERS
+  term 		   = "abcdefghijklmnopqrstuvwxyz" .		
+  t     	   = "true" .
+  f 		   = "false" . 
+  
+TOKENS
+  value   = (t|f) | term.
+  start   = term "=".
+  
+IGNORE CHR(0) .. CHR(31)
+  
+PRODUCTIONS
+  Bool    	 = {start Expression } EOF. 
+  Expression = Term | Term Operator | "!" Term   . 
+  Operator 	 = Not  | And | Or  .
+  Or		 = ("||" | "or")  .
+  And		 = ("&&" | "and")  .
+  Not 		 = ("!"  | "not")  .
+  Term 		 = value | value ";".
+END Bool.
+
+

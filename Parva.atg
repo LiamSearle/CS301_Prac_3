@@ -9,14 +9,15 @@
     control    = CHR(0) .. CHR(31) .
     letter     = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                  + "abcdefghijklmnopqrstuvwxyz" .
-    digit      = "0123456789" .
+    digit      = "123456789" .
+	numbers     = digit + "0" .
     stringCh   = ANY - '"' - control - backslash .
     charCh     = ANY - "'" - control - backslash .
     printable  = ANY - control .
 
   TOKENS
     identifier = letter { letter | digit | "_" } .
-    number     = digit { digit } .
+    number     = "0" | (digit { numbers } ).
     stringLit  = '"' { stringCh | backslash printable } '"' .
     charLit    = "'" ( charCh   | backslash printable ) "'" .
 
@@ -30,8 +31,10 @@
     Statement         =   Block | ";"
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
-                        | ReturnStatement | HaltStatement
-                        | ReadStatement | WriteStatement .
+                        | RepeatUntil | ForLoop | ReturnStatement 
+						| HaltStatement | ReadStatement 
+						| WriteStatement | BreakStatement 
+						| ReadLine | WriteLine .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -39,15 +42,24 @@
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
     Assignment        = Designator "=" Expression ";" .
+	ForAssignment        = Designator "=" Expression .
     Designator        = identifier [ "[" Expression "]" ] .
-    IfStatement       = "if" "(" Condition ")" Statement .
+    IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
+    ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
+	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" .
+	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
+	BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .
-    ReadElement       = stringLit | Designator .
+	ReadLine		  = "readLine" "(" ReadElement
+                                   { "." ReadElement } ")" ";" .
+	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
+                                    { "," WriteElement } ")" ";" .
+	WriteLine		  = "writeLine" "(" WriteElement
                                     { "," WriteElement } ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .
@@ -58,8 +70,8 @@
                         | "new" BasicType "[" Expression "]"
                         | "!" Factor | "(" Expression ")" .
     Type              = BasicType [ "[]" ] .
-    BasicType         = "int" | "bool" .
+    BasicType         = "int" | "bool" | "char" .
     AddOp             = "+" | "-" | "||" .
-    MulOp             = "*" | "/" | "&&" .
+    MulOp             = "*" | "%" | "/" | "&&" .
     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
   END Parva.
