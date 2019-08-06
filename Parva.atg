@@ -9,14 +9,15 @@
     control    = CHR(0) .. CHR(31) .
     letter     = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                  + "abcdefghijklmnopqrstuvwxyz" .
-    digit      = "0123456789" .
+    digit      = "123456789" .
+	numbers     = digit + "0" .
     stringCh   = ANY - '"' - control - backslash .
     charCh     = ANY - "'" - control - backslash .
     printable  = ANY - control .
 
   TOKENS
     identifier = letter { letter | digit | "_" } .
-    number     = digit { digit } .
+    number     = "0" | (digit { numbers } ).
     stringLit  = '"' { stringCh | backslash printable } '"' .
     charLit    = "'" ( charCh   | backslash printable ) "'" .
 
