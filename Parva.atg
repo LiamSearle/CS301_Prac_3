@@ -47,13 +47,13 @@
 						| DoWhileStatement .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
-    Constant          =   number | charLit | "true" | "false" | "null" .
+    Constant          = number | charLit | "true" | "false" | "null" .
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
     Assignment        = Designator ("=" Expression | "++" | "--") ";"
-							| ("--" | "++") Designator ";" .
+						| ("--" | "++") Designator ";" .
 	ForAssignment     = Designator ("=" Expression | "++" | "--")
-							| ("--" | "++") Designator .
+					    | ("--" | "++") Designator .
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
@@ -62,23 +62,23 @@
 	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" ";" .
 	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
-	  BreakStatement	  = "break" ";" .
+	BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
-                                   { "," ReadElement } ")" ";" .
+                         { "," ReadElement } ")" ";" .
 	ReadLine		  = "readLine" "(" [ReadElement
-                                   { "," ReadElement }] ")" ";" .
+                         { "," ReadElement }] ")" ";" .
 	ReadElement       = stringLit | Designator .
     WriteStatement    = "write" "(" WriteElement
-                                    { "," WriteElement } ")" ";" .
+                         { "," WriteElement } ")" ";" .
 	WriteLine		  = "writeLine" "(" [WriteElement
-                                    { "," WriteElement }] ")" ";" .
+                         { "," WriteElement }] ")" ";" .
     WriteElement      = stringLit | Expression .
     Condition         = Expression .
     Expression        = AddExp [ RelOp AddExp ] .
     AddExp            = [ "+" | "-" ] Term { AddOp Term } .
     Term              = Factor { MulOp Factor } .
-    Factor            =   Designator | Constant
+    Factor            = Designator | Constant
                         | "new" BasicType "[" Expression "]"
                         | "!" Factor | "(" Expression ")" 
 						| "{" {Expression [".." Expression]}{"," Expression [".." Expression]} "}"   .
