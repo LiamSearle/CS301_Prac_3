@@ -18,12 +18,6 @@ public class Parser {
 	public const int minus_Sym = 5;
 	public const int star_Sym = 6;
 	public const int slash_Sym = 7;
-<<<<<<< HEAD
-	public const int NOT_SYM = 8;
-	// pragmas
-
-	public const int maxT = 8;
-=======
 	public const int lparen_Sym = 8;
 	public const int rparen_Sym = 9;
 	public const int bang_Sym = 10;
@@ -32,7 +26,6 @@ public class Parser {
 	// pragmas
 
 	public const int maxT = 12;
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 
 	const bool T = true;
 	const bool x = false;
@@ -117,11 +110,7 @@ public class Parser {
 	}
 
 	static void Calc() {
-<<<<<<< HEAD
-		while (la.kind == decNumber_Sym || la.kind == hexNumber_Sym) {
-=======
 		while (StartOf(1)) {
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 			Expression();
 			Expect(equal_Sym);
 		}
@@ -142,16 +131,6 @@ public class Parser {
 	}
 
 	static void Term() {
-<<<<<<< HEAD
-		Factor();
-		while (la.kind == star_Sym || la.kind == slash_Sym) {
-			if (la.kind == star_Sym) {
-				Get();
-				Factor();
-			} else {
-				Get();
-				Factor();
-=======
 		Parent();
 		while (la.kind == star_Sym || la.kind == slash_Sym) {
 			if (la.kind == star_Sym) {
@@ -160,27 +139,15 @@ public class Parser {
 			} else {
 				Get();
 				Parent();
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 			}
 		}
 	}
 
-<<<<<<< HEAD
-	static void Factor() {
-		if (la.kind == decNumber_Sym) {
-			Get();
-		} else if (la.kind == hexNumber_Sym) {
-			Get();
-		} else SynErr(9);
-=======
 	static void Parent() {
 		if (la.kind == lparen_Sym) {
 			Get();
 			Expression();
 			Expect(rparen_Sym);
-			while (la.kind == bang_Sym) {
-				Get();
-			}
 		} else if (la.kind == decNumber_Sym || la.kind == hexNumber_Sym || la.kind == minus_Sym) {
 			Factor();
 			while (la.kind == bang_Sym) {
@@ -208,8 +175,9 @@ public class Parser {
 		} else if (la.kind == minus_Sym) {
 			Get();
 			Expect(hexNumber_Sym);
+		} else if (la.kind == decNumber_Sym) {
+			Get();
 		} else SynErr(14);
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 	}
 
 
@@ -224,12 +192,8 @@ public class Parser {
 	}
 
 	static bool[,] set = {
-<<<<<<< HEAD
-		{T,x,x,x, x,x,x,x, x,x}
-=======
 		{T,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,T,T,x, x,T,x,x, T,x,x,T, x,x}
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 
 	};
 
@@ -349,10 +313,6 @@ public class Errors {
 			case 5: s = "\"-\" expected"; break;
 			case 6: s = "\"*\" expected"; break;
 			case 7: s = "\"/\" expected"; break;
-<<<<<<< HEAD
-			case 8: s = "??? expected"; break;
-			case 9: s = "invalid Factor"; break;
-=======
 			case 8: s = "\"(\" expected"; break;
 			case 9: s = "\")\" expected"; break;
 			case 10: s = "\"!\" expected"; break;
@@ -360,7 +320,6 @@ public class Errors {
 			case 12: s = "??? expected"; break;
 			case 13: s = "invalid Parent"; break;
 			case 14: s = "invalid Factor"; break;
->>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
 
 			default: s = "error " + n; break;
 		}

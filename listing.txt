@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
    1 COMPILER Calc  $CN
    2 /* Simple four function calculator
    3    P.D. Terry, Rhodes University, 2017 */
@@ -21,3 +22,13 @@
   20 END Calc.
 
 0 errors detected
+=======
+   1 (((((((((((1))))))))))) = 
+   2 5! = 
+   3 ! (5)! = 
+**** ^ EOF expected
+   4 abs (6 - 12) = 
+   5 abs (2 + abs(2))! = 
+
+1 errors detected
+>>>>>>> 5e45880ba45cf5137ce88e46f5f4453455311ab2
