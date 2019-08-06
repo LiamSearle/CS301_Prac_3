@@ -1,6 +1,6 @@
 COMPILER Trains $CN
 /* Grammar for simple railway trains
-   P.D. Terry, Rhodes University, 2017 */
+  Makungu Chansa, Matthew Lewis, Liam Searle, 2019 */
 
 IGNORECASE
 
@@ -14,5 +14,6 @@ PRODUCTIONS
   LocoPart  = "loco" { "loco" } .
   GoodsPart = Truck { Truck } .
   HumanPart = "brake" | { "coach" } "guard" .
-  Truck     = "coal" | "closed" | "open" | "cattle" | "fuel" .
+  Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
+  FuelPart  = "fuel" .
 END Trains.
