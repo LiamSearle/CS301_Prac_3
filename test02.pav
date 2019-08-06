@@ -2,5 +2,6 @@
     int i = 0;
     do
       i++;
+      i++;
     while (i < 10);
   } // Main

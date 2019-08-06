@@ -1,13 +1,11 @@
 
-   1 void main () {
-   2 	set empty, odd, all, even;
-   3 	set[] c = new set[200];
-   4 	if (200 < 500) writeLine("fuck you, robin");
-   5 	//empty = {};
-   6 	//odd = {1,3,5,7,11,13};
-   7 	//all = {0 .. 14};
-   8 	even = all - odd;
-   9 	//if (200 in all) writeLine("Dam you, Robin");
-  10 }
+   1   void Main () {
+   2     int i = 0;
+   3     do
+   4       i++;
+   5       i++;
+   6     while (i < 10);
+   7   } // Main
+****   ^ "while" expected
 
-0 errors detected
+1 errors detected
