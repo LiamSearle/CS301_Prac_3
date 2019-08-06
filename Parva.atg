@@ -30,8 +30,8 @@
     Statement         =   Block | ";"
                         | ConstDeclarations | VarDeclarations
                         | Assignment | IfStatement | WhileStatement
-                        | ReturnStatement | HaltStatement
-                        | ReadStatement | WriteStatement  .
+                        | RepeatUntil | ForLoop | ReturnStatement 
+						| HaltStatement | ReadStatement | WriteStatement | BreakStatement .
     ConstDeclarations = "const" OneConst { "," OneConst } ";" .
     OneConst          = identifier "=" Constant .
     Constant          =   number | charLit
@@ -39,11 +39,15 @@
     VarDeclarations   = Type OneVar { "," OneVar } ";" .
     OneVar            = identifier [ "=" Expression ] .
     Assignment        = Designator "=" Expression ";" .
+	ForAssignment        = Designator "=" Expression .
     Designator        = identifier [ "[" Expression "]" ] .
     IfStatement       = "if" "(" Condition ")" Statement [ElseStatement] .
     ElseStatement     = "else" Statement .
     WhileStatement    = "while" "(" Condition ")" Statement .
+	RepeatUntil		  = "repeat" Statement {Statement} "until" "(" Condition ")" .
+	ForLoop			  = "for" "(" VarDeclarations Condition ";" ForAssignment ")" Statement .
     ReturnStatement   = "return" ";" .
+	BreakStatement	  = "break" ";" .
     HaltStatement     = "halt" ";" .
     ReadStatement     = "read" "(" ReadElement
                                    { "," ReadElement } ")" ";" .

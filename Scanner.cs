@@ -63,8 +63,8 @@ public class Scanner {
 	const char EOL = '\n';
 	const int  eofSym = 0;
 	const int charSetSize = 256;
-	const int maxT = 44;
-	const int noSym = 44;
+	const int maxT = 48;
+	const int noSym = 48;
 	// terminals
 	const int EOF_SYM = 0;
 	const int identifier_Sym = 1;
@@ -88,35 +88,39 @@ public class Scanner {
 	const int if_Sym = 19;
 	const int else_Sym = 20;
 	const int while_Sym = 21;
-	const int return_Sym = 22;
-	const int halt_Sym = 23;
-	const int read_Sym = 24;
-	const int write_Sym = 25;
-	const int plus_Sym = 26;
-	const int minus_Sym = 27;
-	const int new_Sym = 28;
-	const int bang_Sym = 29;
-	const int lbrackrbrack_Sym = 30;
-	const int int_Sym = 31;
-	const int bool_Sym = 32;
-	const int barbar_Sym = 33;
-	const int star_Sym = 34;
-	const int slash_Sym = 35;
-	const int andand_Sym = 36;
-	const int percent_Sym = 37;
-	const int equalequal_Sym = 38;
-	const int bangequal_Sym = 39;
-	const int less_Sym = 40;
-	const int lessequal_Sym = 41;
-	const int greater_Sym = 42;
-	const int greaterequal_Sym = 43;
-	const int NOT_SYM = 44;
+	const int repeat_Sym = 22;
+	const int until_Sym = 23;
+	const int for_Sym = 24;
+	const int return_Sym = 25;
+	const int break_Sym = 26;
+	const int halt_Sym = 27;
+	const int read_Sym = 28;
+	const int write_Sym = 29;
+	const int plus_Sym = 30;
+	const int minus_Sym = 31;
+	const int new_Sym = 32;
+	const int bang_Sym = 33;
+	const int lbrackrbrack_Sym = 34;
+	const int int_Sym = 35;
+	const int bool_Sym = 36;
+	const int barbar_Sym = 37;
+	const int star_Sym = 38;
+	const int percent_Sym = 39;
+	const int slash_Sym = 40;
+	const int andand_Sym = 41;
+	const int equalequal_Sym = 42;
+	const int bangequal_Sym = 43;
+	const int less_Sym = 44;
+	const int lessequal_Sym = 45;
+	const int greater_Sym = 46;
+	const int greaterequal_Sym = 47;
+	const int NOT_SYM = 48;
 	// pragmas
 
 	static short[] start = {
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	  0, 33,  3,  0,  0, 26, 24,  6, 10, 11, 22, 17, 15, 18,  0, 23,
+	  0, 33,  3,  0,  0, 23, 25,  6, 10, 11, 22, 17, 15, 18,  0, 24,
 	  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0, 14, 34, 31, 35,  0,
 	  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
 	  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 32,  0, 16,  0,  0,
@@ -245,7 +249,11 @@ public class Scanner {
 			case "if": t.kind = if_Sym; break;
 			case "else": t.kind = else_Sym; break;
 			case "while": t.kind = while_Sym; break;
+			case "repeat": t.kind = repeat_Sym; break;
+			case "until": t.kind = until_Sym; break;
+			case "for": t.kind = for_Sym; break;
 			case "return": t.kind = return_Sym; break;
+			case "break": t.kind = break_Sym; break;
 			case "halt": t.kind = halt_Sym; break;
 			case "read": t.kind = read_Sym; break;
 			case "write": t.kind = write_Sym; break;
@@ -331,14 +339,14 @@ public class Scanner {
 			case 22:
 				{ t.kind = star_Sym; goto done; }
 			case 23:
-				{ t.kind = slash_Sym; goto done; }
-			case 24:
-				if (ch == '&') { buf.Append(ch); NextCh(); goto case 25; }
-				else { t.kind = noSym; goto done; }
-			case 25:
-				{ t.kind = andand_Sym; goto done; }
-			case 26:
 				{ t.kind = percent_Sym; goto done; }
+			case 24:
+				{ t.kind = slash_Sym; goto done; }
+			case 25:
+				if (ch == '&') { buf.Append(ch); NextCh(); goto case 26; }
+				else { t.kind = noSym; goto done; }
+			case 26:
+				{ t.kind = andand_Sym; goto done; }
 			case 27:
 				{ t.kind = equalequal_Sym; goto done; }
 			case 28:

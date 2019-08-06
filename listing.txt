@@ -1,25 +1,11 @@
 
    1 void main () {
-   2   const VotingAge = 18;
-   3   int Eligible, Age Total;
-****                     ^ ";" expected
-   4   int[] Eligible = new int[500];
-   5   Total = 0;
-   6   Eligible = 0;
-   7   read(Age);
-   8   while (Age > 0) {
-   9     if (Age > VotingAge ) {
-  10       Voters[Eligible] = Age
-  11       Eligible = Eligible + - 1;
-****       ^ ";" expected
-****                             ^ invalid Factor
-  12       Total = Total + Voters[Eligible - 1];
-  13     }
-  14     read(Age);
-  15   }
-  16   write(Eligible, " voters.  Average age = , Total / Eligible);
-****                   ^ invalid WriteElement
-  17   /* incomplete comment * /
-  18 }
+   2 	int age = 0;
+   3     for(int i=0;i<23;i=i+1)
+   4 	{
+   5 		age = 5;
+   6 		break;
+   7 	}
+   8 }
 
-4 errors detected
+0 errors detected
