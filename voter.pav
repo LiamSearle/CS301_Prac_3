@@ -1,4 +1,5 @@
 void main () {
+
 	set empty, odd, all, even;
 	set[] c = new set[200];
 	empty = {};
@@ -12,4 +13,5 @@ void main () {
 	readLine();   //as does this
 	read(); //this should fail
 	write(); //as should this
+
 }

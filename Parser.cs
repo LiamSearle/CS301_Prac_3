@@ -36,41 +36,42 @@ public class Parser {
 	public const int if_Sym = 21;
 	public const int else_Sym = 22;
 	public const int while_Sym = 23;
-	public const int repeat_Sym = 24;
-	public const int until_Sym = 25;
-	public const int for_Sym = 26;
-	public const int return_Sym = 27;
-	public const int break_Sym = 28;
-	public const int halt_Sym = 29;
-	public const int read_Sym = 30;
-	public const int readLine_Sym = 31;
-	public const int point_Sym = 32;
-	public const int write_Sym = 33;
-	public const int writeLine_Sym = 34;
-	public const int plus_Sym = 35;
-	public const int minus_Sym = 36;
-	public const int new_Sym = 37;
-	public const int bang_Sym = 38;
-	public const int lbrackrbrack_Sym = 39;
-	public const int int_Sym = 40;
-	public const int bool_Sym = 41;
-	public const int char_Sym = 42;
-	public const int set_Sym = 43;
-	public const int barbar_Sym = 44;
-	public const int star_Sym = 45;
-	public const int percent_Sym = 46;
-	public const int slash_Sym = 47;
-	public const int andand_Sym = 48;
-	public const int equalequal_Sym = 49;
-	public const int bangequal_Sym = 50;
-	public const int less_Sym = 51;
-	public const int lessequal_Sym = 52;
-	public const int greater_Sym = 53;
-	public const int greaterequal_Sym = 54;
-	public const int NOT_SYM = 55;
+	public const int do_Sym = 24;
+	public const int repeat_Sym = 25;
+	public const int until_Sym = 26;
+	public const int for_Sym = 27;
+	public const int return_Sym = 28;
+	public const int break_Sym = 29;
+	public const int halt_Sym = 30;
+	public const int read_Sym = 31;
+	public const int readLine_Sym = 32;
+	public const int point_Sym = 33;
+	public const int write_Sym = 34;
+	public const int writeLine_Sym = 35;
+	public const int plus_Sym = 36;
+	public const int minus_Sym = 37;
+	public const int new_Sym = 38;
+	public const int bang_Sym = 39;
+	public const int lbrackrbrack_Sym = 40;
+	public const int int_Sym = 41;
+	public const int bool_Sym = 42;
+	public const int char_Sym = 43;
+	public const int set_Sym = 44;
+	public const int barbar_Sym = 45;
+	public const int star_Sym = 46;
+	public const int percent_Sym = 47;
+	public const int slash_Sym = 48;
+	public const int andand_Sym = 49;
+	public const int equalequal_Sym = 50;
+	public const int bangequal_Sym = 51;
+	public const int less_Sym = 52;
+	public const int lessequal_Sym = 53;
+	public const int greater_Sym = 54;
+	public const int greaterequal_Sym = 55;
+	public const int NOT_SYM = 56;
 	// pragmas
 
-	public const int maxT = 55;
+	public const int maxT = 56;
 
 	const bool T = true;
 	const bool x = false;
@@ -185,7 +186,17 @@ public class Parser {
 			IfStatement();
 		} else if (la.kind == while_Sym) {
 			WhileStatement();
+<<<<<<< HEAD
 		} else if (la.kind == repeat_Sym) {
+=======
+			break;
+		}
+		case do_Sym: {
+			DoWhileStatement();
+			break;
+		}
+		case repeat_Sym: {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			RepeatUntil();
 		} else if (la.kind == for_Sym) {
 			ForLoop();
@@ -203,9 +214,22 @@ public class Parser {
 			ReadLine();
 		} else if (la.kind == writeLine_Sym) {
 			WriteLine();
+<<<<<<< HEAD
 		} else if (la.kind == identifier_Sym) {
 			SetAssignment();
 		} else SynErr(56);
+=======
+			break;
+		}
+		default: SynErr(57); break;
+		}
+	}
+
+	static void Blocc() {
+		while (StartOf(1)) {
+			Statement();
+		}
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 	}
 
 	static void ConstDeclarations() {
@@ -238,7 +262,7 @@ public class Parser {
 				Get();
 			} else if (la.kind == minusminus_Sym) {
 				Get();
-			} else SynErr(57);
+			} else SynErr(58);
 			Expect(semicolon_Sym);
 		} else if (la.kind == plusplus_Sym || la.kind == minusminus_Sym) {
 			if (la.kind == minusminus_Sym) {
@@ -248,7 +272,7 @@ public class Parser {
 			}
 			Designator();
 			Expect(semicolon_Sym);
-		} else SynErr(58);
+		} else SynErr(59);
 	}
 
 	static void IfStatement() {
@@ -268,6 +292,16 @@ public class Parser {
 		Condition();
 		Expect(rparen_Sym);
 		Statement();
+	}
+
+	static void DoWhileStatement() {
+		Expect(do_Sym);
+		Blocc();
+		Expect(while_Sym);
+		Expect(lparen_Sym);
+		Condition();
+		Expect(rparen_Sym);
+		Expect(semicolon_Sym);
 	}
 
 	static void RepeatUntil() {
@@ -350,7 +384,11 @@ public class Parser {
 	static void WriteLine() {
 		Expect(writeLine_Sym);
 		Expect(lparen_Sym);
+<<<<<<< HEAD
 		if (StartOf(3)) {
+=======
+		if (StartOf(2)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			WriteElement();
 			while (la.kind == comma_Sym) {
 				Get();
@@ -385,7 +423,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == null_Sym) {
 			Get();
-		} else SynErr(59);
+		} else SynErr(60);
 	}
 
 	static void Type() {
@@ -405,7 +443,11 @@ public class Parser {
 
 	static void Expression() {
 		AddExp();
+<<<<<<< HEAD
 		if (StartOf(4)) {
+=======
+		if (StartOf(3)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			RelOp();
 			AddExp();
 		}
@@ -430,7 +472,7 @@ public class Parser {
 				Get();
 			} else if (la.kind == minusminus_Sym) {
 				Get();
-			} else SynErr(60);
+			} else SynErr(61);
 		} else if (la.kind == plusplus_Sym || la.kind == minusminus_Sym) {
 			if (la.kind == minusminus_Sym) {
 				Get();
@@ -438,7 +480,7 @@ public class Parser {
 				Get();
 			}
 			Designator();
-		} else SynErr(61);
+		} else SynErr(62);
 	}
 
 	static void Condition() {
@@ -455,15 +497,19 @@ public class Parser {
 			Get();
 		} else if (la.kind == identifier_Sym) {
 			Designator();
-		} else SynErr(62);
+		} else SynErr(63);
 	}
 
 	static void WriteElement() {
 		if (la.kind == stringLit_Sym) {
 			Get();
+<<<<<<< HEAD
 		} else if (StartOf(5)) {
+=======
+		} else if (StartOf(4)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			Expression();
-		} else SynErr(63);
+		} else SynErr(64);
 	}
 
 	static void AddExp() {
@@ -507,13 +553,17 @@ public class Parser {
 			Get();
 			break;
 		}
-		default: SynErr(64); break;
+		default: SynErr(65); break;
 		}
 	}
 
 	static void Term() {
 		Factor();
+<<<<<<< HEAD
 		while (StartOf(6)) {
+=======
+		while (StartOf(5)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			MulOp();
 			Factor();
 		}
@@ -526,16 +576,20 @@ public class Parser {
 			Get();
 		} else if (la.kind == barbar_Sym) {
 			Get();
-		} else SynErr(65);
+		} else SynErr(66);
 	}
 
 	static void Factor() {
 		switch (la.kind) {
 		case identifier_Sym: {
 			Designator();
+<<<<<<< HEAD
 			break;
 		}
 		case number_Sym: case charLit_Sym: case true_Sym: case false_Sym: case null_Sym: {
+=======
+		} else if (StartOf(6)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			Constant();
 			break;
 		}
@@ -556,6 +610,7 @@ public class Parser {
 			Get();
 			Expression();
 			Expect(rparen_Sym);
+<<<<<<< HEAD
 			break;
 		}
 		case lbrace_Sym: {
@@ -572,6 +627,9 @@ public class Parser {
 		}
 		default: SynErr(66); break;
 		}
+=======
+		} else SynErr(67);
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 	}
 
 	static void MulOp() {
@@ -583,7 +641,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == andand_Sym) {
 			Get();
-		} else SynErr(67);
+		} else SynErr(68);
 	}
 
 	static void BasicType() {
@@ -595,7 +653,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == set_Sym) {
 			Get();
-		} else SynErr(68);
+		} else SynErr(69);
 	}
 
 
@@ -610,6 +668,7 @@ public class Parser {
 	}
 
 	static bool[,] set = {
+<<<<<<< HEAD
 		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x},
 		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,T,T,x, x,T,x,T, T,x,T,T, T,T,T,T, x,T,T,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x},
@@ -617,6 +676,15 @@ public class Parser {
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,T,T, T,T,T,x, x},
 		{x,T,T,x, T,x,T,x, T,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x}
+=======
+		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,T,T,x, x,T,x,T, T,T,x,T, T,T,T,T, T,x,T,T, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,T,T,T, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,T,T, x,x},
+		{x,T,T,x, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x},
+		{x,x,T,x, T,x,x,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x}
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 
 	};
 
@@ -752,51 +820,52 @@ public class Errors {
 			case 21: s = "\"if\" expected"; break;
 			case 22: s = "\"else\" expected"; break;
 			case 23: s = "\"while\" expected"; break;
-			case 24: s = "\"repeat\" expected"; break;
-			case 25: s = "\"until\" expected"; break;
-			case 26: s = "\"for\" expected"; break;
-			case 27: s = "\"return\" expected"; break;
-			case 28: s = "\"break\" expected"; break;
-			case 29: s = "\"halt\" expected"; break;
-			case 30: s = "\"read\" expected"; break;
-			case 31: s = "\"readLine\" expected"; break;
-			case 32: s = "\".\" expected"; break;
-			case 33: s = "\"write\" expected"; break;
-			case 34: s = "\"writeLine\" expected"; break;
-			case 35: s = "\"+\" expected"; break;
-			case 36: s = "\"-\" expected"; break;
-			case 37: s = "\"new\" expected"; break;
-			case 38: s = "\"!\" expected"; break;
-			case 39: s = "\"[]\" expected"; break;
-			case 40: s = "\"int\" expected"; break;
-			case 41: s = "\"bool\" expected"; break;
-			case 42: s = "\"char\" expected"; break;
-			case 43: s = "\"set\" expected"; break;
-			case 44: s = "\"||\" expected"; break;
-			case 45: s = "\"*\" expected"; break;
-			case 46: s = "\"%\" expected"; break;
-			case 47: s = "\"/\" expected"; break;
-			case 48: s = "\"&&\" expected"; break;
-			case 49: s = "\"==\" expected"; break;
-			case 50: s = "\"!=\" expected"; break;
-			case 51: s = "\"<\" expected"; break;
-			case 52: s = "\"<=\" expected"; break;
-			case 53: s = "\">\" expected"; break;
-			case 54: s = "\">=\" expected"; break;
-			case 55: s = "??? expected"; break;
-			case 56: s = "invalid Statement"; break;
-			case 57: s = "invalid Assignment"; break;
+			case 24: s = "\"do\" expected"; break;
+			case 25: s = "\"repeat\" expected"; break;
+			case 26: s = "\"until\" expected"; break;
+			case 27: s = "\"for\" expected"; break;
+			case 28: s = "\"return\" expected"; break;
+			case 29: s = "\"break\" expected"; break;
+			case 30: s = "\"halt\" expected"; break;
+			case 31: s = "\"read\" expected"; break;
+			case 32: s = "\"readLine\" expected"; break;
+			case 33: s = "\".\" expected"; break;
+			case 34: s = "\"write\" expected"; break;
+			case 35: s = "\"writeLine\" expected"; break;
+			case 36: s = "\"+\" expected"; break;
+			case 37: s = "\"-\" expected"; break;
+			case 38: s = "\"new\" expected"; break;
+			case 39: s = "\"!\" expected"; break;
+			case 40: s = "\"[]\" expected"; break;
+			case 41: s = "\"int\" expected"; break;
+			case 42: s = "\"bool\" expected"; break;
+			case 43: s = "\"char\" expected"; break;
+			case 44: s = "\"set\" expected"; break;
+			case 45: s = "\"||\" expected"; break;
+			case 46: s = "\"*\" expected"; break;
+			case 47: s = "\"%\" expected"; break;
+			case 48: s = "\"/\" expected"; break;
+			case 49: s = "\"&&\" expected"; break;
+			case 50: s = "\"==\" expected"; break;
+			case 51: s = "\"!=\" expected"; break;
+			case 52: s = "\"<\" expected"; break;
+			case 53: s = "\"<=\" expected"; break;
+			case 54: s = "\">\" expected"; break;
+			case 55: s = "\">=\" expected"; break;
+			case 56: s = "??? expected"; break;
+			case 57: s = "invalid Statement"; break;
 			case 58: s = "invalid Assignment"; break;
-			case 59: s = "invalid Constant"; break;
-			case 60: s = "invalid ForAssignment"; break;
+			case 59: s = "invalid Assignment"; break;
+			case 60: s = "invalid Constant"; break;
 			case 61: s = "invalid ForAssignment"; break;
-			case 62: s = "invalid ReadElement"; break;
-			case 63: s = "invalid WriteElement"; break;
-			case 64: s = "invalid RelOp"; break;
-			case 65: s = "invalid AddOp"; break;
-			case 66: s = "invalid Factor"; break;
-			case 67: s = "invalid MulOp"; break;
-			case 68: s = "invalid BasicType"; break;
+			case 62: s = "invalid ForAssignment"; break;
+			case 63: s = "invalid ReadElement"; break;
+			case 64: s = "invalid WriteElement"; break;
+			case 65: s = "invalid RelOp"; break;
+			case 66: s = "invalid AddOp"; break;
+			case 67: s = "invalid Factor"; break;
+			case 68: s = "invalid MulOp"; break;
+			case 69: s = "invalid BasicType"; break;
 
 			default: s = "error " + n; break;
 		}

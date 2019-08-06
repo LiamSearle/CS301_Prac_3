@@ -3,6 +3,7 @@
   LL1 warning in AddExp: "+" is the start & successor of a deletable structure
   LL1 warning in AddExp: "-" is the start & successor of a deletable structure
 
+
    1   COMPILER Parva $CN
    2   /* Parva level 1 grammar  - Coco/R for C# (EBNF)
    3      P.D. Terry, Rhodes University, 2003
@@ -84,5 +85,4 @@
   79     RelOp             = "==" | "!=" | "<" | "<=" | ">" | ">=" .
   80   END Parva.
 
-0 errors detected
-4 warnings detected
+

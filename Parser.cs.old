@@ -186,7 +186,17 @@ public class Parser {
 			IfStatement();
 		} else if (la.kind == while_Sym) {
 			WhileStatement();
+<<<<<<< HEAD
 		} else if (la.kind == repeat_Sym) {
+=======
+			break;
+		}
+		case do_Sym: {
+			DoWhileStatement();
+			break;
+		}
+		case repeat_Sym: {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			RepeatUntil();
 		} else if (la.kind == for_Sym) {
 			ForLoop();
@@ -271,6 +281,21 @@ public class Parser {
 		Statement();
 	}
 
+<<<<<<< HEAD
+=======
+	static void DoWhileStatement() {
+		Expect(do_Sym);
+		while (StartOf(1)) {
+			Statement();
+		}
+		Expect(while_Sym);
+		Expect(lparen_Sym);
+		Condition();
+		Expect(rparen_Sym);
+		Expect(semicolon_Sym);
+	}
+
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 	static void RepeatUntil() {
 		Expect(repeat_Sym);
 		Statement();
@@ -351,7 +376,11 @@ public class Parser {
 	static void WriteLine() {
 		Expect(writeLine_Sym);
 		Expect(lparen_Sym);
+<<<<<<< HEAD
 		if (StartOf(3)) {
+=======
+		if (StartOf(2)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			WriteElement();
 			while (la.kind == comma_Sym) {
 				Get();
@@ -406,7 +435,11 @@ public class Parser {
 
 	static void Expression() {
 		AddExp();
+<<<<<<< HEAD
 		if (StartOf(4)) {
+=======
+		if (StartOf(3)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			RelOp();
 			AddExp();
 		}
@@ -462,7 +495,11 @@ public class Parser {
 	static void WriteElement() {
 		if (la.kind == stringLit_Sym) {
 			Get();
+<<<<<<< HEAD
 		} else if (StartOf(5)) {
+=======
+		} else if (StartOf(4)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			Expression();
 		} else SynErr(64);
 	}
@@ -514,7 +551,11 @@ public class Parser {
 
 	static void Term() {
 		Factor();
+<<<<<<< HEAD
 		while (StartOf(6)) {
+=======
+		while (StartOf(5)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			MulOp();
 			Factor();
 		}
@@ -533,7 +574,11 @@ public class Parser {
 	static void Factor() {
 		if (la.kind == identifier_Sym) {
 			Designator();
+<<<<<<< HEAD
 		} else if (StartOf(7)) {
+=======
+		} else if (StartOf(6)) {
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 			Constant();
 		} else if (la.kind == new_Sym) {
 			Get();
@@ -602,9 +647,14 @@ public class Parser {
 
 	static bool[,] set = {
 		{T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+<<<<<<< HEAD
 		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,T,T,x, x,T,x,T, T,x,T,T, T,T,T,T, x,T,T,x, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,T,T,T, T,x,T,x, T,T,x,x, T,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+=======
+		{x,T,x,x, x,x,x,x, T,x,T,T, x,x,x,x, x,T,T,x, x,T,x,T, T,T,x,T, T,T,T,T, T,x,T,T, x,x,x,x, x,T,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x},
+		{x,T,T,T, T,x,T,x, x,x,x,x, x,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, T,T,T,T, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
+>>>>>>> 96c897c5862e5c5421a726d2e8701c4a9d314611
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,T,T, x,x},
 		{x,T,T,x, T,x,T,x, T,T,x,x, T,x,T,T, T,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,T, T,T,T,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x},
 		{x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,x,x, x,x,T,T, T,T,x,x, x,x,x,x, x,x},
