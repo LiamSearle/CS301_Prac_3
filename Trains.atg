@@ -1,6 +1,6 @@
-COMPILER Trains $CN
+COMPILER Trains1 $CN
 /* Grammar for simple railway trains
-  Makungu Chansa, Matthew Lewis, Liam Searle, 2019 */
+   Makungu Chansa, Liam 'Chnaged' Searle, Matthew Lewis, Rhodes University, 2017 */
 
 IGNORECASE
 
@@ -9,10 +9,16 @@ COMMENTS FROM "(*" TO "*)" NESTED
 IGNORE CHR(0) .. CHR(31)
 
 PRODUCTIONS
-  Trains    = { OneTrain } EOF .
-  OneTrain  = LocoPart [ [ GoodsPart ] HumanPart ] SYNC "." .
+  Trains1    = { OneTrain } EOF .
+  OneTrain  = LocoPart [ [ GoodsPart ] ("brake" | HumanPart {HumanPart} )] SYNC "." .
   LocoPart  = "loco" { "loco" } .
-  GoodsPart = Truck { Truck } .
-  HumanPart = "brake" | { "coach" } "guard" .
-  Truck     = "coal" | "closed" | "open" | "cattle" | "fuel" .
-END Trains.
+  GoodsPart = FuelessTruck { Truck } .
+  HumanPart = { "coach" } "guard" .
+  Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
+  FuelessTruck = "coal" | "closed" | "open" | "cattle" .
+  FuelPart 		= "fuel" (Truck | "brake") .
+END Trains1.
+
+// loco loco open fuel open fuel brake . 
+////(can have fuel then brake, ours currently doesn't allow this)
+/////This is pretty much the last issue we have right now.
