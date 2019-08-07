@@ -1,51 +1,61 @@
-loco fuel coach coach coach coach coach guard .        (* invalid - fuel behind locomotive and infront of coach *) 
+loco coal coal open fuel open cattle cattle brake .         (* valid - freight train that ends in brake*)
+        
+loco cattle open coach coach coach guard .                  (* valid - mixed freight/passenger train, ends in guard.*)
+        
+loco loco open open coach coach guard .                     (* valid - mixed, ends in guard.*)
+        
+loco loco open fuel open fuel brake .                       (* valid - freight train with fuel that doesn't come directly after loco or directly before coach (also ends in brake)*)
+        
+loco loco open fuel fuel open fuel brake .                  (* valid - freight train with fuel, valid for same reason as above. *)
+        
+loco open fuel open coach coach guard .                     (* valid - mixed train with fuel valid for same reason, but is mixed so ends in guard*)
+        
+loco loco open open coach coach guard . 			        (* Valid boi - mixed train that ends in guard *)
+        
+loco .                                                      (* valid - single loco okay *)
+        
+loco loco .                                                 (* valid  - multiple also okay	*)
+        
+loco brake .                                                (* valid - I guess.*)
+        
+loco guard .                                                (* valid - What?*)
 
-loco coal coal open fuel open cattle cattle brake .    (* valid - freight train that ends in brake*)
+(*
 
-loco coal coal open fuel open cattle cattle brake guard.(* invalid - should just end in brake *)
+-----------------------------------------------
 
-loco coal coal open fuel open cattle cattle .		   (* invalid - freight train that don't end in brake*)
 
-loco cattle open coach coach coach guard .             (* valid - mixed freight/passenger train, ends in guard.*)
 
-loco cattle open coach coach coach		.			   (* invalid - mixed freight/passenger train, doesn't end in guard *)
+-----------------------------------------------
 
-loco loco open open coach coach guard .                (* valid - mixed, ends in guard.*)
+*)
 
-loco loco open fuel open fuel brake .                  (* valid - freight train with fuel that doesn't come directly after loco or directly before coach (also ends in brake)*)
+loco coal coal open fuel open cattle cattle brake guard .   (* invalid - should just end in brake *)
 
-loco loco open fuel fuel open fuel brake .             (* valid - freight train with fuel, valid for same reason as above. *)
+loco coal coal open fuel open cattle cattle .		        (* invalid - freight train that don't end in brake*)
 
-loco open fuel open coach coach guard .                (* valid - mixed train with fuel valid for same reason, but is mixed so ends in guard*)
+loco cattle open coach coach coach		.			        (* invalid - mixed freight/passenger train, doesn't end in guard *)
 
-loco open fuel open coach coach brake .				   (* invalid - mixed train with fuel, invalid cause ends in brake instead of guard *)
+loco open fuel open coach coach brake .				        (* invalid - mixed train with fuel, invalid cause ends in brake instead of guard *)
 
-loco loco open open coach coach brake .                (* invalid - mixed train, invalid cause ends in brake instead of guard *)
+loco loco open open coach coach brake .                     (* invalid - mixed train, invalid cause ends in brake instead of guard *)
 
-loco loco open open coach coach guard brake .          (* invalid - invalid for same reason as above *)
+loco loco open open coach coach guard brake .               (* invalid - invalid for same reason as above *)
 
-loco loco open open coach coach open guard .           (* invalid - mixed train with freight part after passenger part (this is invalid) *)
+loco loco open open coach coach open guard .                (* invalid - mixed train with freight part after passenger part (this is invalid) *)
 
-loco loco open open coach coach guard . 			   (* Valid boi - mixed train that ends in guard *)
+loco fuel open fuel open brake .                            (* invalid - freight train but has fuel straight after loco therefore bad.*)
 
-loco fuel open fuel open brake .                       (* invalid - freight train but has fuel straight after loco therefore bad.*)
+loco loco fuel fuel fuel brake .                            (* invalid - bad for same reason as above*)
 
-loco loco fuel fuel fuel brake .                       (* invalid - bad for same reason as above*)
+loco open fuel open fuel open coach .                       (* invalid - mixed train, fuel in right places, but does not end in guard *)
 
-loco open fuel open fuel open coach .                  (* invalid - mixed train, fuel in right places, but does not end in guard *)
+loco open fuel open fuel coach guard .                      (* invalid - fuel is directly before coach, this is baaaaad*)
 
-loco open fuel open fuel coach guard .                 (* invalid - fuel is directly before coach, this is baaaaad*)
+loco coach coach coach .                                    (* invalid -  this is a passenger train, but does not end in guard therefore bad.*)
 
-loco coach coach coach .                               (* invalid -  this is a passenger train, but does not end in guard therefore bad.*)
+loco loco open open coach coach guard open .                (* Invalid - freight after passenger stuffs*) 
 
-loco .                                                 (* valid - single loco okay *)
+loco loco open fuel fuel open. 						        (* invalid - don't end in brake *)
 
-loco loco .                                            (* valid  - multiple also okay	*)
-
-loco brake .                                           (* valid - I guess.*)
-
-loco guard .                                           (* valid - What?*)
-
-loco loco open open coach coach guard open .           (* Invalid - freight after passenger stuffs*) 
-
-loco loco open fuel fuel open. 						   (* invalid - don't end in brake *)
+loco fuel coach coach coach coach coach guard .             (* invalid - fuel behind locomotive and infront of coach *) 
