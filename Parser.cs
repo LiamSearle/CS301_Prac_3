@@ -3,15 +3,15 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Trains {
+namespace Trains1 {
 
 public class Parser {
 	public const int _EOF = 0;
 	// terminals
 	public const int EOF_SYM = 0;
-	public const int point_Sym = 1;
-	public const int loco_Sym = 2;
-	public const int brake_Sym = 3;
+	public const int brake_Sym = 1;
+	public const int point_Sym = 2;
+	public const int loco_Sym = 3;
 	public const int coach_Sym = 4;
 	public const int guard_Sym = 5;
 	public const int coal_Sym = 6;
@@ -106,7 +106,7 @@ public class Parser {
 		}
 	}
 
-	static void Trains() {
+	static void Trains1() {
 		while (la.kind == loco_Sym) {
 			OneTrain();
 		}
@@ -119,9 +119,16 @@ public class Parser {
 			if (StartOf(2)) {
 				GoodsPart();
 			}
-			HumanPart();
+			if (la.kind == brake_Sym) {
+				Get();
+			} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
+				HumanPart();
+				while (la.kind == coach_Sym || la.kind == guard_Sym) {
+					HumanPart();
+				}
+			} else SynErr(12);
 		}
-		while (!(la.kind == EOF_SYM || la.kind == point_Sym)) {SynErr(12); Get();}
+		while (!(la.kind == EOF_SYM || la.kind == point_Sym)) {SynErr(13); Get();}
 		Expect(point_Sym);
 	}
 
@@ -133,21 +140,29 @@ public class Parser {
 	}
 
 	static void GoodsPart() {
-		Truck();
-		while (StartOf(2)) {
+		FuelessTruck();
+		while (StartOf(3)) {
 			Truck();
 		}
 	}
 
 	static void HumanPart() {
-		if (la.kind == brake_Sym) {
+		while (la.kind == coach_Sym) {
 			Get();
-		} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
-			while (la.kind == coach_Sym) {
-				Get();
-			}
-			Expect(guard_Sym);
-		} else SynErr(13);
+		}
+		Expect(guard_Sym);
+	}
+
+	static void FuelessTruck() {
+		if (la.kind == coal_Sym) {
+			Get();
+		} else if (la.kind == closed_Sym) {
+			Get();
+		} else if (la.kind == open_Sym) {
+			Get();
+		} else if (la.kind == cattle_Sym) {
+			Get();
+		} else SynErr(14);
 	}
 
 	static void Truck() {
@@ -160,12 +175,8 @@ public class Parser {
 		} else if (la.kind == cattle_Sym) {
 			Get();
 		} else if (la.kind == fuel_Sym) {
-			FuelPart();
-		} else SynErr(14);
-	}
-
-	static void FuelPart() {
-		Expect(fuel_Sym);
+			Get();
+		} else SynErr(15);
 	}
 
 
@@ -174,14 +185,15 @@ public class Parser {
 		la = new Token();
 		la.val = "";
 		Get();
-		Trains();
+		Trains1();
 		Expect(EOF_SYM);
 
 	}
 
 	static bool[,] set = {
-		{T,T,x,x, x,x,x,x, x,x,x,x, x},
-		{x,x,x,T, T,T,T,T, T,T,T,x, x},
+		{T,x,T,x, x,x,x,x, x,x,x,x, x},
+		{x,T,x,x, T,T,T,T, T,T,x,x, x},
+		{x,x,x,x, x,x,T,T, T,T,x,x, x},
 		{x,x,x,x, x,x,T,T, T,T,T,x, x}
 
 	};
@@ -295,9 +307,9 @@ public class Errors {
 		string s;
 		switch (n) {
 			case 0: s = "EOF expected"; break;
-			case 1: s = "\".\" expected"; break;
-			case 2: s = "\"loco\" expected"; break;
-			case 3: s = "\"brake\" expected"; break;
+			case 1: s = "\"brake\" expected"; break;
+			case 2: s = "\".\" expected"; break;
+			case 3: s = "\"loco\" expected"; break;
 			case 4: s = "\"coach\" expected"; break;
 			case 5: s = "\"guard\" expected"; break;
 			case 6: s = "\"coal\" expected"; break;
@@ -306,9 +318,10 @@ public class Errors {
 			case 9: s = "\"cattle\" expected"; break;
 			case 10: s = "\"fuel\" expected"; break;
 			case 11: s = "??? expected"; break;
-			case 12: s = "this symbol not expected in OneTrain"; break;
-			case 13: s = "invalid HumanPart"; break;
-			case 14: s = "invalid Truck"; break;
+			case 12: s = "invalid OneTrain"; break;
+			case 13: s = "this symbol not expected in OneTrain"; break;
+			case 14: s = "invalid FuelessTruck"; break;
+			case 15: s = "invalid Truck"; break;
 
 			default: s = "error " + n; break;
 		}

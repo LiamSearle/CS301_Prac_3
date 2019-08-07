@@ -1,4 +1,4 @@
-COMPILER Trains $CN
+COMPILER Trains1 $CN
 /* Grammar for simple railway trains
    P.D. Terry, Rhodes University, 2017 */
 
@@ -9,12 +9,11 @@ COMMENTS FROM "(*" TO "*)" NESTED
 IGNORE CHR(0) .. CHR(31)
 
 PRODUCTIONS
-  Trains    = { OneTrain } EOF .
-  OneTrain  = LocoPart [ [ GoodsPart ] HumanPart ] SYNC "." .
-  LocoPart  = "loco" { "loco" } [Coach | GoodsPart | HumanPart]  .
-  GoodsPart = Truck  { Truck  ([FuelPart] | Coach | HumanPart)} .
-  HumanPart = "brake" .
-  Coach 	= { "coach" } "guard" [HumanPart] .
-  Truck     = "coal" | "closed" | "open" | "cattle" .
-  FuelPart  = "fuel" .
-END Trains.
+  Trains1    = { OneTrain } EOF .
+  OneTrain  = LocoPart [ [ GoodsPart ] ("brake" |HumanPart {HumanPart} )] SYNC "." .
+  LocoPart  = "loco" { "loco" } .
+  GoodsPart = FuelessTruck { Truck } .
+  HumanPart = { "coach" } "guard" .
+  Truck     = "coal" | "closed" | "open" | "cattle" | "fuel" .
+  FuelessTruck = "coal" | "closed" | "open" | "cattle" .
+END Trains1.

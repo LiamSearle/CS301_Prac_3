@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections;
 using System.Text;
 
-namespace Trains {
+namespace Trains1 {
 
 public class Token {
 	public int kind;    // token kind
@@ -67,9 +67,9 @@ public class Scanner {
 	const int noSym = 11;
 	// terminals
 	const int EOF_SYM = 0;
-	const int point_Sym = 1;
-	const int loco_Sym = 2;
-	const int brake_Sym = 3;
+	const int brake_Sym = 1;
+	const int point_Sym = 2;
+	const int loco_Sym = 3;
 	const int coach_Sym = 4;
 	const int guard_Sym = 5;
 	const int coal_Sym = 6;
@@ -83,11 +83,11 @@ public class Scanner {
 	static short[] start = {
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,
+	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	  0,  0,  6, 37,  0,  0, 33, 13,  0,  0,  0,  0,  2,  0,  0, 24,
+	  0,  0,  1, 37,  0,  0, 33, 13,  0,  0,  0,  0,  7,  0,  0, 24,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -214,32 +214,32 @@ public class Scanner {
 			case -1: { t.kind = eofSym; goto done; } // NextCh already done /* pdt */
 			case 0: { t.kind = noSym; goto done; }   // NextCh already done
 			case 1:
-				{ t.kind = point_Sym; goto done; }
+				if (ch == 'r') { buf.Append(valCh); NextCh(); goto case 2; }
+				else { t.kind = noSym; goto done; }
 			case 2:
-				if (ch == 'o') { buf.Append(valCh); NextCh(); goto case 3; }
+				if (ch == 'a') { buf.Append(valCh); NextCh(); goto case 3; }
 				else { t.kind = noSym; goto done; }
 			case 3:
-				if (ch == 'c') { buf.Append(valCh); NextCh(); goto case 4; }
+				if (ch == 'k') { buf.Append(valCh); NextCh(); goto case 4; }
 				else { t.kind = noSym; goto done; }
 			case 4:
-				if (ch == 'o') { buf.Append(valCh); NextCh(); goto case 5; }
+				if (ch == 'e') { buf.Append(valCh); NextCh(); goto case 5; }
 				else { t.kind = noSym; goto done; }
 			case 5:
-				{ t.kind = loco_Sym; goto done; }
+				{ t.kind = brake_Sym; goto done; }
 			case 6:
-				if (ch == 'r') { buf.Append(valCh); NextCh(); goto case 7; }
-				else { t.kind = noSym; goto done; }
+				{ t.kind = point_Sym; goto done; }
 			case 7:
-				if (ch == 'a') { buf.Append(valCh); NextCh(); goto case 8; }
+				if (ch == 'o') { buf.Append(valCh); NextCh(); goto case 8; }
 				else { t.kind = noSym; goto done; }
 			case 8:
-				if (ch == 'k') { buf.Append(valCh); NextCh(); goto case 9; }
+				if (ch == 'c') { buf.Append(valCh); NextCh(); goto case 9; }
 				else { t.kind = noSym; goto done; }
 			case 9:
-				if (ch == 'e') { buf.Append(valCh); NextCh(); goto case 10; }
+				if (ch == 'o') { buf.Append(valCh); NextCh(); goto case 10; }
 				else { t.kind = noSym; goto done; }
 			case 10:
-				{ t.kind = brake_Sym; goto done; }
+				{ t.kind = loco_Sym; goto done; }
 			case 11:
 				if (ch == 'h') { buf.Append(valCh); NextCh(); goto case 12; }
 				else { t.kind = noSym; goto done; }
