@@ -181,8 +181,10 @@ public class Parser {
 
 	static void FuelPart() {
 		Expect(fuel_Sym);
-		if (StartOf(3)) {
-			Truck();
+		if (StartOf(4)) {
+			while (StartOf(3)) {
+				Truck();
+			}
 		} else if (la.kind == brake_Sym) {
 			Get();
 		} else SynErr(16);
@@ -203,7 +205,8 @@ public class Parser {
 		{T,x,T,x, x,x,x,x, x,x,x,x, x},
 		{x,T,x,x, T,T,T,T, T,T,x,x, x},
 		{x,x,x,x, x,x,T,T, T,T,x,x, x},
-		{x,x,x,x, x,x,T,T, T,T,T,x, x}
+		{x,x,x,x, x,x,T,T, T,T,T,x, x},
+		{x,T,x,x, T,T,T,T, T,T,T,x, x}
 
 	};
 

@@ -18,10 +18,8 @@
   13 loco loco open open coach coach guard .                (* valid - mixed, ends in guard.*)
   14 
   15 loco loco open fuel open fuel brake .                  (* valid - freight train with fuel that doesn't come directly after loco or directly before coach (also ends in brake)*)
-****                                     ^ invalid OneTrain
   16 
   17 loco loco open fuel fuel open fuel brake .             (* valid - freight train with fuel, valid for same reason as above. *)
-****                                          ^ invalid OneTrain
   18 
   19 loco open fuel open coach coach guard .                (* valid - mixed train with fuel valid for same reason, but is mixed so ends in guard*)
   20 
@@ -49,7 +47,6 @@
 ****                                     ^ "guard" expected
   36 
   37 loco open fuel open fuel coach guard .                 (* invalid - fuel is directly before coach, this is baaaaad*)
-****                          ^ invalid FuelPart
   38 
   39 loco coach coach coach .                               (* invalid -  this is a passenger train, but does not end in guard therefore bad.*)
 ****                        ^ "guard" expected
@@ -68,4 +65,4 @@
   51 loco loco open fuel fuel open. 						   (* invalid - don't end in brake *)
 ****                              ^ invalid OneTrain
 
-17 errors detected
+14 errors detected

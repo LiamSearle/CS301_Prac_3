@@ -16,7 +16,7 @@ PRODUCTIONS
   HumanPart = { "coach" } "guard" .
   Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
   FuelessTruck = "coal" | "closed" | "open" | "cattle" .
-  FuelPart 		= "fuel" (Truck | "brake") .
+  FuelPart 		= "fuel" ({Truck} | "brake") .
 END Trains1.
 
 // loco loco open fuel open fuel brake . 
