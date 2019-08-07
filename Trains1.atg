@@ -1,6 +1,6 @@
 COMPILER Trains1 $CN
 /* Grammar for simple railway trains
-   Makungu Chansa, Liam 'Chnaged' Searle, Matthew Lewis, Rhodes University, 2017 */
+   Makungu Chansa, Liam 'Chnaged' Searle, Matthew Lewis, Rhodes University, 2019 */
 
 IGNORECASE
 
