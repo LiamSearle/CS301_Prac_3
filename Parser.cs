@@ -118,17 +118,13 @@ public class Parser {
 		if (StartOf(1)) {
 			if (StartOf(2)) {
 				GoodsPart();
-			}
-			if (la.kind == brake_Sym) {
+			} else if (la.kind == brake_Sym) {
 				Get();
-			} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
+			} else {
 				HumanPart();
-				while (la.kind == coach_Sym || la.kind == guard_Sym) {
-					HumanPart();
-				}
-			} else SynErr(12);
+			}
 		}
-		while (!(la.kind == EOF_SYM || la.kind == point_Sym)) {SynErr(13); Get();}
+		while (!(la.kind == EOF_SYM || la.kind == point_Sym)) {SynErr(12); Get();}
 		Expect(point_Sym);
 	}
 
@@ -141,9 +137,16 @@ public class Parser {
 
 	static void GoodsPart() {
 		FuelessTruck();
-		while (StartOf(3)) {
-			Truck();
+		while (StartOf(2)) {
+			FuelessTruck();
 		}
+		if (la.kind == brake_Sym) {
+			Get();
+		} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
+			HumanPart();
+		} else if (la.kind == fuel_Sym) {
+			FuelPart();
+		} else SynErr(13);
 	}
 
 	static void HumanPart() {
@@ -165,29 +168,16 @@ public class Parser {
 		} else SynErr(14);
 	}
 
-	static void Truck() {
-		if (la.kind == coal_Sym) {
-			Get();
-		} else if (la.kind == closed_Sym) {
-			Get();
-		} else if (la.kind == open_Sym) {
-			Get();
-		} else if (la.kind == cattle_Sym) {
-			Get();
-		} else if (la.kind == fuel_Sym) {
-			FuelPart();
-		} else SynErr(15);
-	}
-
 	static void FuelPart() {
 		Expect(fuel_Sym);
-		if (StartOf(4)) {
-			while (StartOf(3)) {
-				Truck();
-			}
-		} else if (la.kind == brake_Sym) {
+		while (la.kind == fuel_Sym) {
 			Get();
-		} else SynErr(16);
+		}
+		if (la.kind == brake_Sym) {
+			Get();
+		} else if (StartOf(2)) {
+			GoodsPart();
+		} else SynErr(15);
 	}
 
 
@@ -204,9 +194,7 @@ public class Parser {
 	static bool[,] set = {
 		{T,x,T,x, x,x,x,x, x,x,x,x, x},
 		{x,T,x,x, T,T,T,T, T,T,x,x, x},
-		{x,x,x,x, x,x,T,T, T,T,x,x, x},
-		{x,x,x,x, x,x,T,T, T,T,T,x, x},
-		{x,T,x,x, T,T,T,T, T,T,T,x, x}
+		{x,x,x,x, x,x,T,T, T,T,x,x, x}
 
 	};
 
@@ -330,11 +318,10 @@ public class Errors {
 			case 9: s = "\"cattle\" expected"; break;
 			case 10: s = "\"fuel\" expected"; break;
 			case 11: s = "??? expected"; break;
-			case 12: s = "invalid OneTrain"; break;
-			case 13: s = "this symbol not expected in OneTrain"; break;
+			case 12: s = "this symbol not expected in OneTrain"; break;
+			case 13: s = "invalid GoodsPart"; break;
 			case 14: s = "invalid FuelessTruck"; break;
-			case 15: s = "invalid Truck"; break;
-			case 16: s = "invalid FuelPart"; break;
+			case 15: s = "invalid FuelPart"; break;
 
 			default: s = "error " + n; break;
 		}

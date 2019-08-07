@@ -9,16 +9,17 @@ COMMENTS FROM "(*" TO "*)" NESTED
 IGNORE CHR(0) .. CHR(31)
 
 PRODUCTIONS
-  Trains1    = { OneTrain } EOF .
-  OneTrain  = LocoPart [ [ GoodsPart ] ("brake" | HumanPart {HumanPart} )] SYNC "." .
-  LocoPart  = "loco" { "loco" } .
-  GoodsPart = FuelessTruck { Truck } .
-  HumanPart = { "coach" } "guard" .
-  Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
-  FuelessTruck = "coal" | "closed" | "open" | "cattle" .
-  FuelPart 		= "fuel" ({Truck} | "brake") .
+  Trains1       = { OneTrain } EOF .
+  OneTrain      = LocoPart [GoodsPart | "brake" | HumanPart] SYNC "." .
+  LocoPart      = "loco" { "loco" } .
+  GoodsPart     = FuelessTruck { FuelessTruck } ("brake" | HumanPart | FuelPart) .
+  HumanPart     = { "coach" } "guard" .
+//   Truck         = "coal" | "closed" | "open" | "cattle" | FuelPart .
+  FuelessTruck  = "coal" | "closed" | "open" | "cattle" .
+  FuelPart 		= "fuel" {"fuel"} ("brake" | GoodsPart) .
 END Trains1.
 
 // loco loco open fuel open fuel brake . 
+// loco coal coal open fuel open cattle cattle fuel open brake .
 ////(can have fuel then brake, ours currently doesn't allow this)
 /////This is pretty much the last issue we have right now.
