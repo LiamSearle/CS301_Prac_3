@@ -121,9 +121,9 @@ public class Parser {
 			}
 			if (la.kind == brake_Sym) {
 				Get();
-			} else if (la.kind == brake_Sym || la.kind == coach_Sym || la.kind == guard_Sym) {
+			} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
 				HumanPart();
-				while (la.kind == brake_Sym || la.kind == coach_Sym || la.kind == guard_Sym) {
+				while (la.kind == coach_Sym || la.kind == guard_Sym) {
 					HumanPart();
 				}
 			} else SynErr(12);
@@ -147,14 +147,10 @@ public class Parser {
 	}
 
 	static void HumanPart() {
-		if (la.kind == brake_Sym) {
+		while (la.kind == coach_Sym) {
 			Get();
-		} else if (la.kind == coach_Sym || la.kind == guard_Sym) {
-			while (la.kind == coach_Sym) {
-				Get();
-			}
-			Expect(guard_Sym);
-		} else SynErr(14);
+		}
+		Expect(guard_Sym);
 	}
 
 	static void FuelessTruck() {
@@ -166,7 +162,7 @@ public class Parser {
 			Get();
 		} else if (la.kind == cattle_Sym) {
 			Get();
-		} else SynErr(15);
+		} else SynErr(14);
 	}
 
 	static void Truck() {
@@ -179,6 +175,15 @@ public class Parser {
 		} else if (la.kind == cattle_Sym) {
 			Get();
 		} else if (la.kind == fuel_Sym) {
+			FuelPart();
+		} else SynErr(15);
+	}
+
+	static void FuelPart() {
+		Expect(fuel_Sym);
+		if (StartOf(3)) {
+			Truck();
+		} else if (la.kind == brake_Sym) {
 			Get();
 		} else SynErr(16);
 	}
@@ -324,9 +329,9 @@ public class Errors {
 			case 11: s = "??? expected"; break;
 			case 12: s = "invalid OneTrain"; break;
 			case 13: s = "this symbol not expected in OneTrain"; break;
-			case 14: s = "invalid HumanPart"; break;
-			case 15: s = "invalid FuelessTruck"; break;
-			case 16: s = "invalid Truck"; break;
+			case 14: s = "invalid FuelessTruck"; break;
+			case 15: s = "invalid Truck"; break;
+			case 16: s = "invalid FuelPart"; break;
 
 			default: s = "error " + n; break;
 		}

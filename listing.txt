@@ -1,55 +1,25 @@
 
-   1 loco fuel coach coach coach coach coach guard .        (* invalid - fuel behind locomotive and infront of coach *)
-****      ^ this symbol not expected in OneTrain
-   2 
-   3 loco coal coal open fuel open cattle cattle brake .    (* valid - freight train *)
+   1 COMPILER Trains1 $CN
+   2 /* Grammar for simple railway trains
+   3    P.D. Terry, Rhodes University, 2017 */
    4 
-   5 loco coal coal open fuel open cattle cattle .		   (* invalid - freight train *)
-****                                             ^ invalid OneTrain
+   5 IGNORECASE
    6 
-   7 loco cattle open coach coach coach guard .             (* valid - mixed freight/passenger train *)
+   7 COMMENTS FROM "(*" TO "*)" NESTED
    8 
-   9 loco cattle open coach coach coach		.			   (* invalid - mixed freight/passenger train *)
-****                                   		^ "guard" expected
+   9 IGNORE CHR(0) .. CHR(31)
   10 
-  11 loco loco open open coach coach guard .                (* valid *)
-  12 
-  13 loco loco open fuel open fuel brake .                  (* valid - freight train with fuel *)
-  14 
-  15 loco loco open fuel fuel open fuel brake .             (* valid - freight train with fuel *)
-  16 
-  17 loco open fuel open coach coach guard .                (* valid - mixed train with fuel *)
-  18 
-  19 loco loco open open coach coach brake .                (* invalid *)
-****                                 ^ "guard" expected
-  20 
-  21 loco loco open open coach coach guard brake .          (* invalid *)
-****                                       ^ this symbol not expected in OneTrain
-  22 
-  23 loco loco open open coach coach open guard .           (* invalid *)
-****                                 ^ "guard" expected
-  24 
-  25 loco fuel open fuel open brake .                       (* invalid *)
-****      ^ this symbol not expected in OneTrain
-  26 
-  27 loco loco fuel fuel fuel brake .                       (* invalid *)
-****           ^ this symbol not expected in OneTrain
-  28 
-  29 loco open fuel open fuel open coach .                  (* invalid *)
-****                                     ^ "guard" expected
-  30 
-  31 loco open fuel open fuel coach guard .                 (* invalid *)
-  32 
-  33 loco coach coach coach .                               (* invalid *)
-****                        ^ "guard" expected
-  34 
-  35 loco .                                                 (* valid - loco travelling light *)
-  36 
-  37 loco loco .                                            (* valid *)
-  38 
-  39 loco brake .                                           (* valid *)
-  40 
-  41 loco guard .                                           (* valid *)
-  42 
+  11 PRODUCTIONS
+  12   Trains1    = { OneTrain } EOF .
+  13   OneTrain  = LocoPart [ [ GoodsPart ] ("brake" | HumanPart {HumanPart} )] SYNC "." .
+  14   LocoPart  = "loco" { "loco" } .
+  15   GoodsPart = FuelessTruck { Truck } .
+  16   HumanPart = { "coach" } "guard" .
+  17   Truck     = "coal" | "closed" | "open" | "cattle" | FuelPart .
+  18   FuelessTruck = "coal" | "closed" | "open" | "cattle" .
+  19   FuelPart 		= "fuel" (Truck | "brake") .
+  20 END Trains1.
+  21 
+  22 // loco loco open fuel open fuel brake . 
 
-10 errors detected
+0 errors detected

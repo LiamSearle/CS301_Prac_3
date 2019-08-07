@@ -175,8 +175,17 @@ public class Parser {
 		} else if (la.kind == cattle_Sym) {
 			Get();
 		} else if (la.kind == fuel_Sym) {
-			Get();
+			FuelPart();
 		} else SynErr(15);
+	}
+
+	static void FuelPart() {
+		Expect(fuel_Sym);
+		if (StartOf(3)) {
+			Truck();
+		} else if (la.kind == brake_Sym) {
+			Get();
+		} else SynErr(16);
 	}
 
 
@@ -322,6 +331,7 @@ public class Errors {
 			case 13: s = "this symbol not expected in OneTrain"; break;
 			case 14: s = "invalid FuelessTruck"; break;
 			case 15: s = "invalid Truck"; break;
+			case 16: s = "invalid FuelPart"; break;
 
 			default: s = "error " + n; break;
 		}
